@@ -4,19 +4,23 @@ Django base settings for congif project.
 Shared across all environments.
 """
 
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vkuk&_v(-0o%ig8u1od2fs!m#d1nerc%*b)7r_m01s0mii3mp#'
+SECRET_KEY = os.environ['SECRET_KEY']
 
-ALLOWED_HOSTS = []
+DEBUG = os.getenv('DEBUG', 'False').lower() in ('true', '1', 'yes')
 
 
 # Application definition

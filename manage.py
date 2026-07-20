@@ -6,7 +6,9 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'congif.settings.local')
+    from congif.env import get_settings_module
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', get_settings_module())
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
