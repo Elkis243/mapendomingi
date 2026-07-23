@@ -1,0 +1,339 @@
+{% load static %}
+<!doctype html>
+{# SEO base — JSON-LD, canonical HTTPS, preloads LCP, OG/Twitter. Blocs Django conservés. #}
+<html lang="{{ SEO_LANG|default:'fr' }}" dir="ltr">
+  <head>
+    {% block gtag %}
+    {% endblock gtag %}
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta http-equiv="Content-Language" content="{{ SEO_LANG|default:'fr' }}" />
+    <meta name="color-scheme" content="light" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="format-detection" content="telephone=yes, email=yes, address=yes" />
+
+    <title>{% block title %}{{ page|default:'MAPENDO MINGI' }} - ASBL de développement social et communautaire{% endblock title %}</title>
+
+    <meta
+      name="description"
+      content="{% block meta_description %}MAPENDO MINGI est une ASBL de développement social et communautaire dont la mission est d'améliorer les conditions de vie des populations, avec un accent particulier sur les femmes, les enfants et les jeunes. Protection des droits humains, éducation, santé, entrepreneuriat, agriculture, bonne gouvernance et consolidation de la paix.{% endblock meta_description %}"
+    />
+    <meta
+      name="keywords"
+      content="MAPENDO MINGI, ASBL, développement social, développement communautaire, femmes, enfants, jeunes, droits humains, éducation, santé, entrepreneuriat, agriculture, bonne gouvernance, consolidation de la paix, RDC, République Démocratique du Congo, association à but non lucratif"
+    />
+    <meta name="author" content="MAPENDO MINGI ASBL" />
+    <meta name="creator" content="MAPENDO MINGI ASBL" />
+    <meta name="publisher" content="MAPENDO MINGI ASBL" />
+    <meta name="copyright" content="MAPENDO MINGI ASBL" />
+
+    {# Meta robots — directives Google modernes #}
+    <meta
+      name="robots"
+      content="{% block meta_robots %}index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1{% endblock meta_robots %}"
+    />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    {% block google_site_verification %}{% endblock google_site_verification %}
+
+    {# URL canonique absolue #}
+    <link rel="canonical" href="{% block canonical_url %}{{ SEO_CANONICAL_URL }}{% endblock canonical_url }}" />
+
+    {# Sitemap — fichier statique à la racine #}
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ SEO_SITEMAP_URL }}" />
+
+    {# Hreflang — fr actuel ; bloc prêt pour d'autres locales #}
+    <link rel="alternate" hreflang="fr" href="{% block hreflang_fr %}{{ SEO_CANONICAL_URL }}{% endblock %}" />
+    <link rel="alternate" hreflang="x-default" href="{% block hreflang_default %}{{ SEO_CANONICAL_URL }}{% endblock %}" />
+    {% block hreflang_extra %}{% endblock hreflang_extra %}
+
+    {# Géolocalisation — République Démocratique du Congo #}
+    <meta name="geo.region" content="CD" />
+    <meta name="geo.placename" content="République Démocratique du Congo" />
+    <meta name="geo.position" content="-4.3276;15.3136" />
+    <meta name="ICBM" content="-4.3276, 15.3136" />
+
+    {# Open Graph #}
+    <meta property="og:title" content="{% block og_title %}{{ page|default:'MAPENDO MINGI' }} - Développement social et communautaire{% endblock og_title %}" />
+    <meta
+      property="og:description"
+      content="{% block og_description %}MAPENDO MINGI ASBL améliore les conditions de vie des populations, en particulier des femmes, des enfants et des jeunes, à travers la protection des droits humains, l'éducation, la santé, l'entrepreneuriat, l'agriculture, la bonne gouvernance et la consolidation de la paix.{% endblock og_description %}"
+    />
+    <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}" />
+    <meta property="og:url" content="{% block og_url %}{{ SEO_CANONICAL_URL }}{% endblock og_url %}" />
+    <meta property="og:image" content="{% block og_image %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endblock og_image %}" />
+    <meta property="og:image:secure_url" content="{% block og_image_secure %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endblock %}" />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
+    <meta property="og:image:height" content="{% block og_image_height %}630{% endblock %}" />
+    <meta property="og:image:alt" content="{% block og_image_alt %}MAPENDO MINGI ASBL - Développement social et communautaire{% endblock %}" />
+    <meta property="og:site_name" content="MAPENDO MINGI" />
+    <meta property="og:locale" content="{{ SEO_LOCALE|default:'fr_FR' }}" />
+
+    {# Twitter Card #}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="{% block twitter_title %}{{ page|default:'MAPENDO MINGI' }} - Développement social et communautaire{% endblock twitter_title %}" />
+    <meta name="twitter:description" content="{% block twitter_description %}MAPENDO MINGI, ASBL engagée pour améliorer les conditions de vie des femmes, des enfants et des jeunes en République Démocratique du Congo.{% endblock twitter_description %}" />
+    <meta name="twitter:image" content="{% block twitter_image %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endblock twitter_image %}" />
+    <meta name="twitter:image:alt" content="{% block twitter_image_alt %}MAPENDO MINGI ASBL - Développement social et communautaire{% endblock %}" />
+
+    {# Favicon #}
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon/favicon.ico' %}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'images/favicon/favicon-16x16.png' %}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon/favicon-32x32.png' %}" />
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'images/favicon/android-chrome-192x192.png' %}" />
+    <link rel="icon" type="image/png" sizes="512x512" href="{% static 'images/favicon/android-chrome-512x512.png' %}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/favicon/apple-touch-icon.png' %}" />
+    <link rel="manifest" href="{% static 'images/favicon/site.webmanifest' %}" />
+
+    <meta name="theme-color" content="#034169" />
+    <meta name="msapplication-TileColor" content="#034169" />
+    <meta name="msapplication-TileImage" content="{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}" />
+    <meta name="application-name" content="MAPENDO MINGI" />
+    <meta name="apple-mobile-web-app-title" content="MAPENDO MINGI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    {# DNS / preconnect — CDN critiques #}
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    {# Preload LCP / identité #}
+    <link rel="preload" href="{% static 'images/logo.png' %}" as="image" type="image/png" />
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&amp;display=swap"
+      as="style"
+    />
+    {% block preload_lcp %}{% endblock preload_lcp %}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
+
+    <link href="{% static 'style/index.css' %}" rel="stylesheet" />
+    <link href="{% static 'style/footer.css' %}" rel="stylesheet" />
+
+    {% block extra_css %}{% endblock extra_css %}
+
+    {# JSON-LD — NGO + WebSite (SEO + AI search) #}
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": ["NGO", "Organization"],
+          "@id": "{{ SEO_ORIGIN }}/#organization",
+          "name": "MAPENDO MINGI",
+          "alternateName": ["Mapendo Mingi", "MAPENDO MINGI ASBL"],
+          "legalName": "MAPENDO MINGI ASBL",
+          "url": "{{ SEO_ORIGIN }}/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "{{ SEO_ORIGIN }}{% static 'images/logo.png' %}",
+            "contentUrl": "{{ SEO_ORIGIN }}{% static 'images/logo.png' %}",
+            "caption": "Logo MAPENDO MINGI ASBL"
+          },
+          "image": "{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}",
+          "description": "ASBL de développement social et communautaire dont la mission est d'améliorer les conditions de vie des populations, avec un accent particulier sur les femmes, les enfants et les jeunes. Elle agit dans les domaines de la protection des droits humains, de l'éducation, de la santé, de l'entrepreneuriat, de l'agriculture, de la bonne gouvernance et de la consolidation de la paix.",
+          "slogan": "Améliorer les conditions de vie des populations",
+          "nonprofitStatus": "NonprofitType",
+          "knowsLanguage": ["fr"],
+          "knowsAbout": [
+            "Développement social et communautaire",
+            "Protection des droits humains",
+            "Éducation",
+            "Santé",
+            "Entrepreneuriat",
+            "Agriculture",
+            "Bonne gouvernance",
+            "Consolidation de la paix",
+            "Femmes, enfants et jeunes"
+          ],
+          "areaServed": {
+            "@type": "Country",
+            "name": "République Démocratique du Congo",
+            "sameAs": "https://www.wikidata.org/wiki/Q974"
+          },
+          "audience": [
+            {
+              "@type": "Audience",
+              "audienceType": "Femmes"
+            },
+            {
+              "@type": "Audience",
+              "audienceType": "Enfants"
+            },
+            {
+              "@type": "Audience",
+              "audienceType": "Jeunes"
+            }
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "{{ SEO_ORIGIN }}/#website",
+          "url": "{{ SEO_ORIGIN }}/",
+          "name": "MAPENDO MINGI",
+          "description": "ASBL de développement social et communautaire engagée pour les femmes, les enfants et les jeunes en République Démocratique du Congo.",
+          "publisher": { "@id": "{{ SEO_ORIGIN }}/#organization" },
+          "inLanguage": "fr-CD",
+          "copyrightHolder": { "@id": "{{ SEO_ORIGIN }}/#organization" },
+          "about": { "@id": "{{ SEO_ORIGIN }}/#organization" }
+        },
+        {
+          "@type": "WebPage",
+          "@id": "{{ SEO_CANONICAL_URL }}#webpage",
+          "url": "{{ SEO_CANONICAL_URL }}",
+          "name": "MAPENDO MINGI",
+          "isPartOf": { "@id": "{{ SEO_ORIGIN }}/#website" },
+          "about": { "@id": "{{ SEO_ORIGIN }}/#organization" },
+          "inLanguage": "fr-CD",
+          "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}"
+          }
+        }
+      ]
+    }
+    </script>
+    {% block structured_data_extra %}{% endblock structured_data_extra %}
+  </head>
+
+  <body class="{% block body_class %}{% endblock body_class %}">
+    <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 m-2 p-2 bg-white text-dark rounded" href="#main-content">
+      Aller au contenu principal
+    </a>
+
+    {% block base %}{% endblock base %}
+    {% include "partials/footer.html" %}
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!window.bootstrap) {
+          return;
+        }
+
+        const toggle = document.getElementById("navbarServicesDropdown");
+        const desktopMedia = window.matchMedia("(min-width: 1200px)");
+        let dropdownInstance = null;
+
+        function applyServicesDropdownMode() {
+          if (!toggle) {
+            return;
+          }
+
+          if (desktopMedia.matches) {
+            if (dropdownInstance) {
+              dropdownInstance.dispose();
+              dropdownInstance = null;
+            }
+            toggle.removeAttribute("data-bs-toggle");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.closest(".site-navbar__dropdown")?.classList.remove("show");
+            return;
+          }
+
+          toggle.setAttribute("data-bs-toggle", "dropdown");
+          dropdownInstance = bootstrap.Dropdown.getOrCreateInstance(toggle, {
+            autoClose: "outside",
+          });
+        }
+
+        applyServicesDropdownMode();
+        desktopMedia.addEventListener("change", applyServicesDropdownMode);
+
+        const offcanvasElement = document.getElementById("siteNavbar");
+        if (!offcanvasElement) {
+          return;
+        }
+
+        try {
+          const bsOffcanvas = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+          const mobileMediaQuery = window.matchMedia("(max-width: 1199.98px)");
+
+          offcanvasElement.addEventListener("click", function (event) {
+            if (!mobileMediaQuery.matches) {
+              return;
+            }
+
+            const navigableLink = event.target.closest("a.nav-link, a.btn, a.dropdown-item");
+            if (!navigableLink) {
+              return;
+            }
+
+            if (navigableLink.classList.contains("dropdown-toggle")) {
+              return;
+            }
+
+            const href = navigableLink.getAttribute("href");
+            if (href && href !== "#") {
+              bsOffcanvas.hide();
+            }
+          });
+        } catch (error) {
+          console.warn("Navbar offcanvas unavailable:", error);
+        }
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!window.AOS) {
+          return;
+        }
+
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (reduceMotion) {
+          return;
+        }
+
+        document
+          .querySelectorAll("main > section:not(.hero-section):not(.service-page-hero)")
+          .forEach(function (section) {
+            if (!section.hasAttribute("data-aos")) {
+              section.setAttribute("data-aos", "fade-up");
+              section.setAttribute("data-aos-duration", "700");
+              section.setAttribute("data-aos-offset", "60");
+            }
+          });
+
+        document
+          .querySelectorAll(
+            ".service-card, .trust-point, .secteur-item, .about-section__media, .about-section__title, .cta-section__content, .contact-form-card, .contact-section__title"
+          )
+          .forEach(function (element, index) {
+            if (element.hasAttribute("data-aos")) {
+              return;
+            }
+            element.setAttribute("data-aos", "fade-up");
+            element.setAttribute("data-aos-duration", "650");
+            element.setAttribute("data-aos-delay", String((index % 4) * 80));
+            element.setAttribute("data-aos-offset", "40");
+          });
+
+        AOS.init({
+          once: true,
+          duration: 700,
+          easing: "ease-out-cubic",
+          offset: 60,
+          disable: false,
+        });
+      });
+    </script>
+    {% block extra_js %}{% endblock extra_js %}
+  </body>
+</html>
