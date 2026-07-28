@@ -4,9 +4,19 @@ Django production settings.
 
 import os
 
+import dj_database_url
+
 from .base import *  # noqa: F401, F403
 
 SECRET_KEY = os.environ['SECRET_KEY']
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True,
+    )
+}
 
 ALLOWED_HOSTS = [
     host.strip()
