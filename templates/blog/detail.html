@@ -3,6 +3,53 @@
 
 {% block title %}{{ post.title }} - Mapendo Mingi{% endblock title %}
 
+{% block meta_description %}{{ post.excerpt|truncatewords:40 }}{% endblock meta_description %}
+{% block og_title %}{{ post.title }} - MAPENDO MINGI{% endblock og_title %}
+{% block og_description %}{{ post.excerpt|truncatewords:40 }}{% endblock og_description %}
+{% block og_type %}article{% endblock og_type %}
+{% block og_image %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock og_image %}
+{% block og_image_secure %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock %}
+{% block twitter_title %}{{ post.title }} - MAPENDO MINGI{% endblock twitter_title %}
+{% block twitter_description %}{{ post.excerpt|truncatewords:30 }}{% endblock twitter_description %}
+{% block twitter_image %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock twitter_image %}
+{% block webpage_name %}{{ post.title }} - MAPENDO MINGI{% endblock webpage_name %}
+{% block webpage_description %}{{ post.excerpt|truncatewords:40 }}{% endblock webpage_description %}
+{% block webpage_image %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock webpage_image %}
+
+{% block structured_data_extra %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "@id": "{{ SEO_CANONICAL_URL }}#article",
+  "headline": "{{ post.title|escapejs }}",
+  "description": "{{ post.excerpt|truncatewords:40|escapejs }}",
+  "datePublished": "{% if post.published_at %}{{ post.published_at|date:'c' }}{% endif %}",
+  "dateModified": "{{ post.updated_at|date:'c' }}",
+  "inLanguage": "fr-CD",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "{{ SEO_CANONICAL_URL }}"
+  },
+  "author": {
+    "@type": "Person",
+    "name": "{{ post.author.get_full_name|default:post.author.username|capfirst|escapejs }}"
+  },
+  "publisher": {
+    "@id": "{{ SEO_ORIGIN }}/#organization"
+  },
+  "articleSection": "{{ post.category.name|escapejs }}",
+  {% if post.featured_image %}
+  "image": {
+    "@type": "ImageObject",
+    "url": "{% if post.featured_image.url|slice:':4' == 'http' %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}"
+  },
+  {% endif %}
+  "url": "{{ SEO_CANONICAL_URL }}"
+}
+</script>
+{% endblock structured_data_extra %}
+
 {% block body_class %}page-blog-detail{% endblock body_class %}
 
 {% block base %}
@@ -51,13 +98,12 @@
     </div>
   </section>
 
-  <section class="domain-article" aria-labelledby="blog-article-heading">
+  <section class="domain-article" aria-labelledby="blog-detail-heading">
     <div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-8 mx-auto">
           <article class="domain-article__inner" data-aos="fade-up">
             <p class="domain-article__eyebrow">{{ post.category.name }}</p>
-            <h2 id="blog-article-heading" class="domain-article__title">{{ post.title }}</h2>
             <div class="blog-detail__toolbar">
               <p class="domain-article__text blog-detail__meta mb-0">
                 {% if post.published_at %}

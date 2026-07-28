@@ -197,13 +197,14 @@
           "@type": "WebPage",
           "@id": "{{ SEO_CANONICAL_URL }}#webpage",
           "url": "{{ SEO_CANONICAL_URL }}",
-          "name": "MAPENDO MINGI",
+          "name": "{% block webpage_name %}MAPENDO MINGI{% endblock webpage_name %}",
+          "description": "{% block webpage_description %}ASBL de développement social et communautaire engagée pour les femmes, les enfants et les jeunes en République Démocratique du Congo.{% endblock webpage_description %}",
           "isPartOf": { "@id": "{{ SEO_ORIGIN }}/#website" },
           "about": { "@id": "{{ SEO_ORIGIN }}/#organization" },
           "inLanguage": "fr-CD",
           "primaryImageOfPage": {
             "@type": "ImageObject",
-            "url": "{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}"
+            "url": "{% block webpage_image %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endblock webpage_image %}"
           }
         }
       ]

@@ -1058,6 +1058,10 @@ img {
     padding-bottom: 0;
   }
 
+  .hero--contact {
+    min-height: 115svh;
+  }
+
   .page-hero__title {
     font-size: clamp(1.65rem, 8vw, 2.25rem);
   }
