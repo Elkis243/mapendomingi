@@ -10,21 +10,22 @@ from .base import *  # noqa: F401, F403
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
+_database_url = os.getenv('DATABASE_URL', '')
+# SSL requis sur l’URL publique ; souvent inutile (et cassant) sur *.railway.internal
+_ssl_require = 'railway.internal' not in _database_url
+
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
+        default=_database_url,
         conn_max_age=600,
-        ssl_require=True,
+        ssl_require=_ssl_require,
     )
 }
 
 ALLOWED_HOSTS = [
-    host.strip()
-    for host in os.getenv(
-        'ALLOWED_HOSTS',
-        'mapendomingi-production.up.railway.app,mapendomingi.org,www.mapendomingi.org',
-    ).split(',')
-    if host.strip()
+    'mapendomingi-production.up.railway.app',
+    'mapendomingi.org',
+    'www.mapendomingi.org',
 ]
 
 SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS', '31536000'))
@@ -38,12 +39,9 @@ SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'True') == 'True'
 CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'True') == 'True'
 
 CSRF_TRUSTED_ORIGINS = [
-    origin.strip()
-    for origin in os.getenv(
-        'CSRF_TRUSTED_ORIGINS',
-        'https://mapendomingi-production.up.railway.app,https://mapendomingi.org,https://www.mapendomingi.org',
-    ).split(',')
-    if origin.strip()
+    'https://*.up.railway.app',
+    'https://mapendomingi.org',
+    'https://www.mapendomingi.org',
 ]
 
 X_FRAME_OPTIONS = os.getenv('X_FRAME_OPTIONS', 'DENY')
