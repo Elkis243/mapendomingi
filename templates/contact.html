@@ -46,6 +46,11 @@
                 Merci. Votre message a bien été reçu.
               </p>
             {% else %}
+              {% if rate_limited %}
+                <p class="contact-card__error" role="alert">
+                  Trop de tentatives. Réessayez dans quelques minutes.
+                </p>
+              {% endif %}
               <form class="contact-form" id="contact-form" method="post" action="{% url 'app:contact' %}" novalidate>
                 {% csrf_token %}
                 <div class="contact-form__row">
@@ -59,6 +64,7 @@
                       autocomplete="name"
                       required
                       aria-describedby="contact-name-error"
+                      {% if rate_limited %}disabled{% endif %}
                     />
                     <p class="contact-form__error" id="contact-name-error" role="alert" hidden></p>
                   </div>
@@ -72,6 +78,7 @@
                       autocomplete="email"
                       required
                       aria-describedby="contact-email-error"
+                      {% if rate_limited %}disabled{% endif %}
                     />
                     <p class="contact-form__error" id="contact-email-error" role="alert" hidden></p>
                   </div>
@@ -86,6 +93,7 @@
                     name="subject"
                     required
                     aria-describedby="contact-subject-error"
+                    {% if rate_limited %}disabled{% endif %}
                   />
                   <p class="contact-form__error" id="contact-subject-error" role="alert" hidden></p>
                 </div>
@@ -99,11 +107,14 @@
                     rows="4"
                     required
                     aria-describedby="contact-message-error"
+                    {% if rate_limited %}disabled{% endif %}
                   ></textarea>
                   <p class="contact-form__error" id="contact-message-error" role="alert" hidden></p>
                 </div>
 
-                <button class="contact-form__submit" type="submit">Soumettre</button>
+                <button class="contact-form__submit" type="submit" {% if rate_limited %}disabled{% endif %}>
+                  Soumettre
+                </button>
               </form>
             {% endif %}
           </div>

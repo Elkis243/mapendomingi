@@ -1,6 +1,27 @@
+from django.core.cache import cache
 from django.shortcuts import render
 
 from blog.models import Post
+
+CONTACT_RATE_LIMIT = 3
+CONTACT_RATE_WINDOW_SECONDS = 10 * 60
+
+
+def _client_ip(request) -> str:
+    forwarded = request.META.get("HTTP_X_FORWARDED_FOR")
+    if forwarded:
+        return forwarded.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR") or "unknown"
+
+
+def _contact_rate_limited(request) -> bool:
+    """True si l'IP a dépassé la limite d'envois contact."""
+    cache_key = f"contact_rate:{_client_ip(request)}"
+    count = cache.get(cache_key, 0)
+    if count >= CONTACT_RATE_LIMIT:
+        return True
+    cache.set(cache_key, count + 1, CONTACT_RATE_WINDOW_SECONDS)
+    return False
 
 
 def home(request):
@@ -128,9 +149,21 @@ def donate(request):
 
 def contact(request):
     sent = False
-    if request.method == 'POST':
-        sent = True
-    return render(request, 'contact.html', {'page': 'Contact', 'sent': sent})
+    rate_limited = False
+    if request.method == "POST":
+        if _contact_rate_limited(request):
+            rate_limited = True
+        else:
+            sent = True
+    return render(
+        request,
+        "contact.html",
+        {
+            "page": "Contact",
+            "sent": sent,
+            "rate_limited": rate_limited,
+        },
+    )
 
 
 def about(request):

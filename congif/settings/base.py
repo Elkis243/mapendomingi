@@ -125,6 +125,14 @@ WHITENOISE_ROOT = BASE_DIR / 'public'
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
+# Cache (rate-limit contact, etc.)
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'mapendo-default',
+    }
+}
+
 # Email
 EMAIL_BACKEND = os.getenv(
     'EMAIL_BACKEND',
