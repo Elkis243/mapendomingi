@@ -1,0 +1,143 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Qui sommes-nous - MAPENDO MINGI{% endblock title %}
+
+{% block body_class %}page-about{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--about" aria-labelledby="about-hero-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image hero__image--about"
+        src="{% static 'images/qui-sommes-nous.webp' %}"
+        alt=""
+        width="1200"
+        height="1600"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="page-hero__content">
+            <h1 id="about-hero-heading" class="page-hero__title">Qui sommes-nous</h1>
+            <nav class="page-hero__breadcrumb" aria-label="Fil d’Ariane">
+              <a href="{% url 'app:home' %}">Home</a>
+              <span aria-hidden="true"> / </span>
+              <span class="page-hero__breadcrumb-current">Qui sommes-nous</span>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-page" aria-labelledby="about-content-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <div class="about-page__inner">
+            <div class="about-page__content" data-aos="fade-right" data-aos-duration="900">
+              <h2 id="about-content-heading" class="about-page__title">
+                Une organisation engagée pour les femmes, les enfants et les jeunes
+              </h2>
+              <p class="about-page__text" data-aos="fade-up" data-aos-delay="100">
+                Née à Goma le 29 novembre 2019, nous sommes une association
+                sans but lucratif de droit congolais. Animés par la solidarité, la
+                justice et l’inclusion, nous nous engageons pour le développement
+                communautaire et l’amélioration des conditions de vie des populations,
+                en particulier des femmes, des enfants et des jeunes.
+              </p>
+              <p class="about-page__text mb-0" data-aos="fade-up" data-aos-delay="200">
+                Notre action porte sur la promotion des droits humains, l’accès à
+                l’éducation et à la santé, l’entrepreneuriat, l’agriculture, le
+                développement durable, la bonne gouvernance, ainsi que la consolidation
+                de la paix et de la cohésion sociale, pour un avenir plus juste,
+                inclusif et durable.
+              </p>
+            </div>
+            <div class="about-page__media" data-aos="fade-left" data-aos-duration="1000">
+              <img
+                class="about-page__image"
+                src="{% static 'images/picture1.webp' %}"
+                alt="Communauté accompagnée par MAPENDO MINGI"
+                width="1200"
+                height="900"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-pillars" aria-labelledby="about-pillars-heading">
+    <div class="about-pillars__pattern" aria-hidden="true">
+      <svg class="about-pillars__map" viewBox="0 0 1200 400" preserveAspectRatio="none">
+        <path d="M40 220 C180 120, 320 280, 480 180 S780 80, 980 160 S1140 260, 1180 210" fill="none" stroke="rgba(255,255,255,0.16)" stroke-width="1.2" />
+        <path d="M20 300 C220 240, 360 340, 540 260 S820 180, 1040 280 S1160 320, 1200 300" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1" />
+        <path d="M80 90 C260 40, 420 150, 620 70 S900 20, 1120 110" fill="none" stroke="rgba(61,139,184,0.28)" stroke-width="1.1" />
+        <circle cx="210" cy="160" r="3" fill="rgba(255,255,255,0.35)" />
+        <circle cx="540" cy="250" r="2.5" fill="rgba(255,255,255,0.3)" />
+        <circle cx="860" cy="120" r="3" fill="rgba(61,139,184,0.55)" />
+        <circle cx="1020" cy="270" r="2.5" fill="rgba(255,255,255,0.28)" />
+      </svg>
+    </div>
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <h2 id="about-pillars-heading" class="visually-hidden">Mission, vision et action</h2>
+          <div class="row g-4 about-pillars__grid">
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="0">
+              <article class="pillar-card h-100">
+                <span class="pillar-card__icon" aria-hidden="true">
+                  <i class="bi bi-heart"></i>
+                </span>
+                <h3 class="pillar-card__title">Mission</h3>
+                <p class="pillar-card__text mb-0">
+                  Améliorer les conditions de vie des populations en République
+                  Démocratique du Congo, avec une attention particulière aux femmes,
+                  aux enfants et aux jeunes.
+                </p>
+              </article>
+            </div>
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="100">
+              <article class="pillar-card h-100">
+                <span class="pillar-card__icon" aria-hidden="true">
+                  <i class="bi bi-brightness-high"></i>
+                </span>
+                <h3 class="pillar-card__title">Vision</h3>
+                <p class="pillar-card__text mb-0">
+                  Une société plus juste, inclusive et durable, où chaque communauté
+                  a accès à la dignité, aux opportunités et à la paix.
+                </p>
+              </article>
+            </div>
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="200">
+              <article class="pillar-card h-100">
+                <span class="pillar-card__icon" aria-hidden="true">
+                  <i class="bi bi-hand-index-thumb"></i>
+                </span>
+                <h3 class="pillar-card__title">Action</h3>
+                <p class="pillar-card__text mb-0">
+                  Des interventions concrètes en éducation, santé, droits humains,
+                  entrepreneuriat, gouvernance et consolidation de la paix.
+                </p>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}

@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Faire un don - MAPENDO MINGI{% endblock title %}
+
+{% block body_class %}page-donate{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--donate" aria-labelledby="donate-card-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image hero__image--donate"
+        src="{% static 'images/don.webp' %}"
+        alt=""
+        width="1200"
+        height="900"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-lg-9 mx-auto">
+          <div class="donate-card" data-aos="fade-right" data-aos-duration="800">
+            <div class="donate-card__top">
+              <h1 id="donate-card-heading" class="donate-card__title">Faire un don</h1>
+              <p class="donate-card__text">
+                Chaque contribution finance des actions concrètes : éducation,
+                protection des enfants, santé, accompagnement des femmes et
+                consolidation de la paix dans les communautés.
+              </p>
+            </div>
+
+            <div class="donate-card__bottom" data-donate-switch>
+              <div class="donate-panel is-active" data-donate-panel="bank" id="donate-panel-bank">
+                <img
+                  class="donate-card__bank-logo"
+                  src="{% static 'images/uba.png' %}"
+                  alt="UBA"
+                  width="120"
+                  height="48"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <p class="donate-card__label">Numéro de compte</p>
+                <p class="donate-card__number" id="donate-account-number">045020657587</p>
+                <p class="donate-card__hint">Indiquez « Don » en communication du virement.</p>
+              </div>
+
+              <div class="donate-panel" data-donate-panel="mobile" id="donate-panel-mobile" hidden>
+                <p class="donate-card__label">Numéro Mobile Money</p>
+                <p class="donate-card__number" id="donate-mobile-number">Non disponible pour le moment</p>
+              </div>
+
+              <div class="donate-switch" role="tablist" aria-label="Mode de paiement">
+                <button
+                  class="donate-switch__btn is-active"
+                  type="button"
+                  role="tab"
+                  id="donate-tab-bank"
+                  aria-selected="true"
+                  aria-controls="donate-panel-bank"
+                  data-donate-tab="bank"
+                >
+                  Compte bancaire
+                </button>
+                <button
+                  class="donate-switch__btn"
+                  type="button"
+                  role="tab"
+                  id="donate-tab-mobile"
+                  aria-selected="false"
+                  aria-controls="donate-panel-mobile"
+                  data-donate-tab="mobile"
+                >
+                  Mobile money
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}
+
+{% block extra_js %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var root = document.querySelector("[data-donate-switch]");
+    if (!root) return;
+
+    var tabs = root.querySelectorAll("[data-donate-tab]");
+    var panels = root.querySelectorAll("[data-donate-panel]");
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        var target = tab.getAttribute("data-donate-tab");
+
+        tabs.forEach(function (btn) {
+          var active = btn === tab;
+          btn.classList.toggle("is-active", active);
+          btn.setAttribute("aria-selected", active ? "true" : "false");
+        });
+
+        panels.forEach(function (panel) {
+          var active = panel.getAttribute("data-donate-panel") === target;
+          panel.classList.toggle("is-active", active);
+          panel.hidden = !active;
+        });
+      });
+    });
+  });
+</script>
+{% endblock extra_js %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog - MAPENDO MINGI{% endblock title %}
+
+{% block body_class %}page-blog{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--blog" aria-labelledby="blog-hero-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image hero__image--blog"
+        src="{% static 'images/don.webp' %}"
+        alt=""
+        width="1200"
+        height="900"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="page-hero__content">
+            <h1 id="blog-hero-heading" class="page-hero__title">Découvrir autrement</h1>
+            <nav class="page-hero__breadcrumb" aria-label="Fil d’Ariane">
+              <a href="{% url 'app:home' %}">Home</a>
+              <span aria-hidden="true"> / </span>
+              <span class="page-hero__breadcrumb-current">Blog</span>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-empty" aria-labelledby="blog-empty-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9" data-aos="fade-up">
+          <h2 id="blog-empty-heading" class="visually-hidden">Articles</h2>
+          <p class="blog-empty__message mb-0">
+            Aucune publication pour l’instant — le blog ouvrira bientôt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}

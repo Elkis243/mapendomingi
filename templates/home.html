@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}MAPENDO MINGI - ASBL de développement social et communautaire{% endblock title %}
+
+{% block body_class %}page-home{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image"
+        src="{% static 'images/hero.webp' %}"
+        alt="Groupe d’enfants souriants — éducation, espoir et avenir"
+        width="2000"
+        height="1333"
+        fetchpriority="high"
+        data-aos="fade-in"
+        data-aos-duration="1200"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <div class="hero__content">
+            <h1 id="hero-heading" class="hero__title" data-aos="fade-up" data-aos-delay="100">
+              Ensemble, construisons l’avenir.
+            </h1>
+            <p class="hero__lead" data-aos="fade-up" data-aos-delay="220">
+              Nous agissons pour améliorer la vie des femmes, des enfants et des jeunes
+              à travers l'éducation, la santé, l'entrepreneuriat et la consolidation
+              de la paix en République Démocratique du Congo.
+            </p>
+            <div class="hero__actions" data-aos="fade-up" data-aos-delay="340">
+              <a class="hero__btn hero__btn--primary" href="{% url 'app:donate' %}">Nous soutenir</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="org" id="qui-sommes-nous" aria-labelledby="org-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <div class="org__inner">
+            <div class="org__content" data-aos="fade-right" data-aos-duration="900">
+              <h2 id="org-heading" class="org__title">
+                Une organisation engagée pour les femmes, les enfants et les jeunes
+              </h2>
+              <p class="org__text" data-aos="fade-up" data-aos-delay="100">
+                Nous sommes une association sans but lucratif de développement
+                social et communautaire dont la mission est d’améliorer les
+                conditions de vie des populations en République Démocratique du Congo.
+              </p>
+              <p class="org__text" data-aos="fade-up" data-aos-delay="200">
+                Elle agit dans les domaines de la protection des droits humains,
+                de l’éducation, de la santé, de l’entrepreneuriat, de l’agriculture,
+                de la bonne gouvernance et de la consolidation de la paix.
+              </p>
+              <a class="org__btn" href="{% url 'app:about' %}" data-aos="fade-up" data-aos-delay="280">
+                En savoir plus
+                <i class="bi bi-arrow-right" aria-hidden="true"></i>
+              </a>
+            </div>
+            <div class="org__media" data-aos="fade-left" data-aos-duration="1000">
+              <img
+                class="org__image"
+                src="{% static 'images/qui-sommes-nous.webp' %}"
+                alt="Enfants attentifs lors d’une activité éducative communautaire"
+                width="1200"
+                height="1600"
+                loading="lazy"
+              />
+              <div class="org__veil" aria-hidden="true"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="domains" id="domaines" aria-labelledby="domains-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <header class="domains__header text-center mx-auto mb-4 mb-md-5" data-aos="fade-up">
+            <p class="domains__eyebrow">Domaines d’intervention</p>
+            <h2 id="domains-heading" class="domains__title mb-0">
+              Des actions concrètes pour les communautés
+            </h2>
+          </header>
+
+          <div class="row g-4">
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="0">
+              <a class="domain-card h-100" href="{% url 'app:domain_detail' 'femme-enfant' %}">
+                <div class="domain-card__media">
+                  <img
+                    class="domain-card__image"
+                    src="{% static 'images/promotion-femme-enfant.webp' %}"
+                    alt="Femmes et enfants lors d’un événement communautaire à Kinshasa, RDC"
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="domain-card__badge">Femme &amp; Enfant</span>
+                </div>
+                <div class="domain-card__body">
+                  <h3 class="domain-card__title">Promotion de la Femme &amp; Protection de l’Enfant</h3>
+                  <p class="domain-card__text mb-0">
+                    Renforcer les droits des femmes et protéger les enfants
+                    pour un avenir plus digne et sécurisé.
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="120">
+              <a class="domain-card h-100" href="{% url 'app:domain_detail' 'education-jeunesse' %}">
+                <div class="domain-card__media">
+                  <img
+                    class="domain-card__image"
+                    src="{% static 'images/education-jeunesse-entrepreneur.webp' %}"
+                    alt="Élèves en classe en République Démocratique du Congo"
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="domain-card__badge">Éducation</span>
+                </div>
+                <div class="domain-card__body">
+                  <h3 class="domain-card__title">Éducation, Jeunesse &amp; Entrepreneuriat</h3>
+                  <p class="domain-card__text mb-0">
+                    Former, accompagner et créer des opportunités pour les
+                    jeunes et les porteurs de projets.
+                  </p>
+                </div>
+              </a>
+            </div>
+
+            <div class="col-12 col-md-4" data-aos="fade-up" data-aos-delay="240">
+              <a class="domain-card h-100" href="{% url 'app:domain_detail' 'sante-durable' %}">
+                <div class="domain-card__media">
+                  <img
+                    class="domain-card__image"
+                    src="{% static 'images/sante-developpement-durable.webp' %}"
+                    alt="Marché local à Kinshasa, République Démocratique du Congo"
+                    width="1200"
+                    height="900"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="domain-card__badge">Santé</span>
+                </div>
+                <div class="domain-card__body">
+                  <h3 class="domain-card__title">Santé &amp; Développement Durable</h3>
+                  <p class="domain-card__text mb-0">
+                    Améliorer l’accès aux soins et promouvoir des pratiques
+                    durables au service des communautés.
+                  </p>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="engage" id="soutenir" aria-labelledby="engage-heading">
+    <div class="engage__layout">
+      <div class="engage__media" data-aos="fade-right" data-aos-duration="1000">
+        <img
+          class="engage__image"
+          src="{% static 'images/don.webp' %}"
+          alt="Communauté engagée pour l’entraide et la solidarité en RDC"
+          width="1200"
+          height="900"
+          loading="lazy"
+          decoding="async"
+        />
+        <div class="engage__veil" aria-hidden="true"></div>
+      </div>
+      <div class="engage__side">
+        <div class="engage__content" data-aos="fade-left" data-aos-duration="900">
+          <p class="engage__badge" data-aos="fade-up" data-aos-delay="50">Soutenez la cause</p>
+          <h2 id="engage-heading" class="engage__title" data-aos="fade-up" data-aos-delay="120">
+            Votre soutien change des vies
+          </h2>
+          <p class="engage__text" data-aos="fade-up" data-aos-delay="200">
+            En faisant un don ou en rejoignant l’association, vous aidez à
+            offrir éducation, santé et espoir aux plus vulnérables.
+            Votre engagement fait la différence, dès aujourd’hui.
+          </p>
+          <div class="engage__actions d-flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="280">
+            <a class="engage__btn engage__btn--primary" href="{% url 'app:donate' %}">Faire un don</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}

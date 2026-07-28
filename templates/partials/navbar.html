@@ -1,0 +1,70 @@
+{% load static %}
+<nav class="site-navbar" aria-label="Navigation principale">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9">
+        <div class="site-navbar__inner">
+          <a class="site-navbar__brand" href="{% url 'app:home' %}">
+            <img
+              class="site-navbar__logo"
+              src="{% static 'images/logo.png' %}"
+              alt="MAPENDO MINGI"
+              width="300"
+              height="147"
+              decoding="async"
+            />
+          </a>
+
+          <button
+            class="site-navbar__toggler"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#siteNavbar"
+            aria-controls="siteNavbar"
+            aria-label="Ouvrir le menu"
+          >
+            <i class="bi bi-list" aria-hidden="true"></i>
+          </button>
+
+          <div class="site-navbar__links d-none d-xl-flex">
+            <a class="site-navbar__link{% if request.resolver_match.url_name == 'home' %} is-active{% endif %}" href="{% url 'app:home' %}">Home</a>
+            <a class="site-navbar__link{% if request.resolver_match.url_name == 'about' %} is-active{% endif %}" href="{% url 'app:about' %}">Qui sommes-nous</a>
+            <a class="site-navbar__link" href="{% url 'app:home' %}#domaines">Domaines d’intervention</a>
+            <a class="site-navbar__link{% if request.resolver_match.url_name == 'donate' %} is-active{% endif %}" href="{% url 'app:donate' %}">Don</a>
+            <a class="site-navbar__link{% if request.resolver_match.url_name == 'blog' %} is-active{% endif %}" href="{% url 'app:blog' %}">Blog</a>
+            <a class="site-navbar__link{% if request.resolver_match.url_name == 'contact' %} is-active{% endif %}" href="{% url 'app:contact' %}">Contact</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div
+  class="offcanvas offcanvas-end site-navbar__offcanvas"
+  tabindex="-1"
+  id="siteNavbar"
+  aria-labelledby="siteNavbarLabel"
+>
+  <div class="offcanvas-header">
+    <p class="offcanvas-title site-navbar__brand" id="siteNavbarLabel">
+      <img
+        class="site-navbar__logo"
+        src="{% static 'images/logo.png' %}"
+        alt="MAPENDO MINGI"
+        width="300"
+        height="147"
+        decoding="async"
+      />
+    </p>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fermer"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column gap-3">
+    <a class="site-navbar__link{% if request.resolver_match.url_name == 'home' %} is-active{% endif %}" href="{% url 'app:home' %}">Home</a>
+    <a class="site-navbar__link{% if request.resolver_match.url_name == 'about' %} is-active{% endif %}" href="{% url 'app:about' %}">Qui sommes-nous</a>
+    <a class="site-navbar__link" href="{% url 'app:home' %}#domaines">Domaines d’intervention</a>
+    <a class="site-navbar__link{% if request.resolver_match.url_name == 'donate' %} is-active{% endif %}" href="{% url 'app:donate' %}">Don</a>
+    <a class="site-navbar__link{% if request.resolver_match.url_name == 'blog' %} is-active{% endif %}" href="{% url 'app:blog' %}">Blog</a>
+    <a class="site-navbar__link{% if request.resolver_match.url_name == 'contact' %} is-active{% endif %}" href="{% url 'app:contact' %}">Contact</a>
+  </div>
+</div>

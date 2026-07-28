@@ -1,1 +1,120 @@
-{# Footer MAPENDO MINGI — à compléter #}
+{% load static %}
+{# Footer — données démo facilement remplaçables #}
+<footer class="site-footer" role="contentinfo">
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-9">
+        <div class="site-footer__grid">
+          {# Colonne marque #}
+          <div class="site-footer__brand" data-aos="fade-up" data-aos-delay="0">
+            <a class="site-footer__logo-link" href="{% url 'app:home' %}">
+              <img
+                class="site-footer__logo"
+                src="{% static 'images/logo.png' %}"
+                alt="MAPENDO MINGI"
+                width="300"
+                height="147"
+                loading="lazy"
+                decoding="async"
+              />
+            </a>
+            <p class="site-footer__desc">
+              Association sans but lucratif de développement social et communautaire,
+              engagée pour améliorer les conditions de vie des femmes, des enfants
+              et des jeunes en République Démocratique du Congo.
+            </p>
+          </div>
+
+          {# Colonne contact #}
+          <div class="site-footer__contact" data-aos="fade-up" data-aos-delay="100">
+            <ul class="site-footer__contact-list">
+              <li>
+                <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+                <span>Avenue IBIS, quartier Le Volcan, Goma, République Démocratique du Congo</span>
+              </li>
+              <li>
+                <i class="bi bi-phone" aria-hidden="true"></i>
+                <a href="tel:+243000000000">+243 000 000 000</a>
+              </li>
+              <li>
+                <i class="bi bi-envelope-fill" aria-hidden="true"></i>
+                <a href="mailto:contact@mapendomingi.org">contact@mapendomingi.org</a>
+              </li>
+            </ul>
+
+            <ul class="site-footer__social" aria-label="Réseaux sociaux">
+              <li>
+                <a href="#" class="site-footer__social-link" aria-label="Facebook" rel="noopener noreferrer">
+                  <i class="bi bi-facebook" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="site-footer__social-link" aria-label="LinkedIn" rel="noopener noreferrer">
+                  <i class="bi bi-linkedin" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="site-footer__social-link" aria-label="Twitter" rel="noopener noreferrer">
+                  <i class="bi bi-twitter" aria-hidden="true"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="site-footer__social-link" aria-label="Instagram" rel="noopener noreferrer">
+                  <i class="bi bi-instagram" aria-hidden="true"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {# Colonne navigation #}
+          <nav class="site-footer__nav" aria-label="Liens du pied de page" data-aos="fade-up" data-aos-delay="200">
+            <ul class="site-footer__links">
+              <li>
+                <a href="{% url 'app:home' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Home
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:about' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Qui sommes-nous
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:home' %}#domaines">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Domaines d’intervention
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:blog' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:contact' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Contact
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:donate' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Nous soutenir
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="site-footer__bottom">
+          <p class="site-footer__copy">
+            © {% now "Y" %} MAPENDO MINGI ASBL. Tous droits réservés.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

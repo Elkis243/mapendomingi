@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Contact - MAPENDO MINGI{% endblock title %}
+
+{% block body_class %}page-contact{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--contact" aria-labelledby="contact-card-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image hero__image--contact"
+        src="{% static 'images/hero.webp' %}"
+        alt=""
+        width="1600"
+        height="1067"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 col-lg-9 mx-auto">
+          <div class="contact-card" data-aos="fade-right" data-aos-duration="800">
+            <div class="contact-card__top">
+              <h1 id="contact-card-heading" class="contact-card__title">Avez-vous une question&nbsp;?</h1>
+              <p class="contact-card__text">
+                Votre voix compte. Partagez vos idées, vos besoins ou votre envie
+                de collaborer : notre équipe vous accompagne avec attention.
+              </p>
+            </div>
+
+            {% if sent %}
+              <p class="contact-card__success" role="status">
+                Merci. Votre message a bien été reçu.
+              </p>
+            {% else %}
+              <form class="contact-form" method="post" action="{% url 'app:contact' %}" novalidate>
+                {% csrf_token %}
+                <div class="contact-form__row">
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="contact-name">Nom</label>
+                    <input
+                      class="contact-form__input"
+                      type="text"
+                      id="contact-name"
+                      name="name"
+                      autocomplete="name"
+                      required
+                    />
+                  </div>
+                  <div class="contact-form__field">
+                    <label class="contact-form__label" for="contact-email">Email</label>
+                    <input
+                      class="contact-form__input"
+                      type="email"
+                      id="contact-email"
+                      name="email"
+                      autocomplete="email"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="contact-form__field">
+                  <label class="contact-form__label" for="contact-subject">Sujet</label>
+                  <input
+                    class="contact-form__input"
+                    type="text"
+                    id="contact-subject"
+                    name="subject"
+                    required
+                  />
+                </div>
+
+                <div class="contact-form__field">
+                  <label class="contact-form__label" for="contact-message">Message</label>
+                  <textarea
+                    class="contact-form__input contact-form__textarea"
+                    id="contact-message"
+                    name="message"
+                    rows="4"
+                    required
+                  ></textarea>
+                </div>
+
+                <button class="contact-form__submit" type="submit">Soumettre</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}

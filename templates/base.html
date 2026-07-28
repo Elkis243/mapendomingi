@@ -38,7 +38,7 @@
     {% block google_site_verification %}{% endblock google_site_verification %}
 
     {# URL canonique absolue #}
-    <link rel="canonical" href="{% block canonical_url %}{{ SEO_CANONICAL_URL }}{% endblock canonical_url }}" />
+    <link rel="canonical" href="{% block canonical_url %}{{ SEO_CANONICAL_URL }}{% endblock canonical_url %}" />
 
     {# Sitemap — fichier statique à la racine #}
     <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ SEO_SITEMAP_URL }}" />
@@ -120,10 +120,11 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
 
-    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet" />
 
     <link href="{% static 'style/index.css' %}" rel="stylesheet" />
+
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 
     {% block extra_css %}{% endblock extra_css %}
 
@@ -217,7 +218,6 @@
     </a>
 
     {% block base %}{% endblock base %}
-    {% include "partials/footer.html" %}
 
     {# Bootstrap 5.3.3 JS (bundle = Popper inclus) #}
     <script
@@ -226,7 +226,6 @@
       crossorigin="anonymous"
       defer
     ></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js" defer></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         if (!window.bootstrap) {
@@ -295,47 +294,16 @@
         }
       });
     </script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        if (!window.AOS) {
-          return;
-        }
-
-        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        if (reduceMotion) {
-          return;
-        }
-
-        document
-          .querySelectorAll("main > section:not(.hero-section):not(.service-page-hero)")
-          .forEach(function (section) {
-            if (!section.hasAttribute("data-aos")) {
-              section.setAttribute("data-aos", "fade-up");
-              section.setAttribute("data-aos-duration", "700");
-              section.setAttribute("data-aos-offset", "60");
-            }
-          });
-
-        document
-          .querySelectorAll(
-            ".service-card, .trust-point, .secteur-item, .about-section__media, .about-section__title, .cta-section__content, .contact-form-card, .contact-section__title"
-          )
-          .forEach(function (element, index) {
-            if (element.hasAttribute("data-aos")) {
-              return;
-            }
-            element.setAttribute("data-aos", "fade-up");
-            element.setAttribute("data-aos-duration", "650");
-            element.setAttribute("data-aos-delay", String((index % 4) * 80));
-            element.setAttribute("data-aos-offset", "40");
-          });
-
+        if (!window.AOS) return;
         AOS.init({
-          once: true,
-          duration: 700,
+          duration: 800,
           easing: "ease-out-cubic",
-          offset: 60,
-          disable: false,
+          once: true,
+          offset: 80,
+          disable: window.matchMedia("(prefers-reduced-motion: reduce)").matches,
         });
       });
     </script>
