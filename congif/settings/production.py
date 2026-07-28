@@ -10,15 +10,11 @@ from .base import *  # noqa: F401, F403
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-_database_url = os.getenv('DATABASE_URL', '')
-# SSL requis sur l’URL publique ; souvent inutile (et cassant) sur *.railway.internal
-_ssl_require = 'railway.internal' not in _database_url
-
 DATABASES = {
     'default': dj_database_url.config(
-        default=_database_url,
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=_ssl_require,
+        ssl_require=True,
     )
 }
 
