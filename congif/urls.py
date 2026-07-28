@@ -17,8 +17,16 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.static import serve
+
+from app.sitemaps import PostSitemap, StaticViewSitemap
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'posts': PostSitemap,
+}
 
 urlpatterns = [
     path(
@@ -28,8 +36,9 @@ urlpatterns = [
     ),
     path(
         'sitemap.xml',
-        serve,
-        {'document_root': settings.BASE_DIR / 'public', 'path': 'sitemap.xml'},
+        sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap',
     ),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
