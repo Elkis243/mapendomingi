@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ post.title }} - Mapendo Mingi{% endblock title %}
+
+{% block body_class %}page-blog-detail{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--blog" aria-labelledby="blog-detail-heading">
+    <div class="hero__media" aria-hidden="true">
+      {% if post.featured_image %}
+        <img
+          class="hero__image hero__image--blog"
+          src="{{ post.featured_image.url }}"
+          alt=""
+          width="1200"
+          height="900"
+          fetchpriority="high"
+        />
+      {% else %}
+        <img
+          class="hero__image hero__image--blog"
+          src="{% static 'images/don.webp' %}"
+          alt=""
+          width="1200"
+          height="900"
+          fetchpriority="high"
+        />
+      {% endif %}
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="page-hero__content">
+            <h1 id="blog-detail-heading" class="page-hero__title">{{ post.title }}</h1>
+            <nav class="page-hero__breadcrumb" aria-label="Fil d’Ariane">
+              <a href="{% url 'app:home' %}">Home</a>
+              <span aria-hidden="true"> / </span>
+              <a href="{% url 'blog:post_list' %}">Blog</a>
+              <span aria-hidden="true"> / </span>
+              <span class="page-hero__breadcrumb-current">{{ post.category.name }}</span>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="domain-article" aria-labelledby="blog-article-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-8 mx-auto">
+          <article class="domain-article__inner" data-aos="fade-up">
+            <p class="domain-article__eyebrow">{{ post.category.name }}</p>
+            <h2 id="blog-article-heading" class="domain-article__title">{{ post.title }}</h2>
+            <div class="blog-detail__toolbar">
+              <p class="domain-article__text blog-detail__meta mb-0">
+                {% if post.published_at %}
+                  <span class="blog-detail__meta-item">
+                    <i class="bi bi-calendar3" aria-hidden="true"></i>
+                    <time datetime="{{ post.published_at|date:'Y-m-d' }}">{{ post.published_at|date:"d F Y" }}</time>
+                  </span>
+                {% endif %}
+                <span class="blog-detail__meta-item">
+                  <i class="bi bi-person" aria-hidden="true"></i>
+                  {{ post.author.get_full_name|default:post.author.username|capfirst }}
+                </span>
+                <span class="blog-detail__meta-item">
+                  <i class="bi bi-eye" aria-hidden="true"></i>
+                  {{ post.views }} vue{{ post.views|pluralize }}
+                </span>
+              </p>
+
+              <div class="blog-detail__actions" aria-label="Partager et imprimer">
+                <div class="dropdown">
+                  <button
+                    class="blog-detail__action"
+                    type="button"
+                    id="blogShareMenu"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    aria-haspopup="true"
+                  >
+                    <i class="bi bi-share" aria-hidden="true"></i>
+                    <span>Partager</span>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end blog-detail__share-menu" aria-labelledby="blogShareMenu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.facebook.com/sharer/sharer.php?u={{ request.build_absolute_uri|urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i class="bi bi-facebook" aria-hidden="true"></i>
+                        Facebook
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://wa.me/?text={{ post.title|urlencode }}%20{{ request.build_absolute_uri|urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i class="bi bi-whatsapp" aria-hidden="true"></i>
+                        WhatsApp
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://www.linkedin.com/sharing/share-offsite/?url={{ request.build_absolute_uri|urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i class="bi bi-linkedin" aria-hidden="true"></i>
+                        LinkedIn
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="https://twitter.com/intent/tweet?url={{ request.build_absolute_uri|urlencode }}&text={{ post.title|urlencode }}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <i class="bi bi-twitter" aria-hidden="true"></i>
+                        Twitter
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+
+                <button class="blog-detail__action" type="button" onclick="window.print()">
+                  <i class="bi bi-printer" aria-hidden="true"></i>
+                  <span>Imprimer</span>
+                </button>
+              </div>
+            </div>
+            <p class="domain-article__text">{{ post.excerpt }}</p>
+            <div class="domain-article__text blog-detail__content">{{ post.content|linebreaks }}</div>
+
+            {% if gallery %}
+              <div class="blog-detail__gallery">
+                {% for image in gallery %}
+                  <figure class="blog-detail__figure">
+                    <img
+                      class="blog-detail__image"
+                      src="{{ image.image.url }}"
+                      alt="{{ image.caption|default:post.title }}"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {% if image.caption %}
+                      <figcaption>{{ image.caption }}</figcaption>
+                    {% endif %}
+                  </figure>
+                {% endfor %}
+              </div>
+            {% endif %}
+          </article>
+
+          {% if related_posts %}
+            <aside class="blog-related" aria-labelledby="blog-related-heading" data-aos="fade-up">
+              <h2 id="blog-related-heading" class="blog-related__title">Articles similaires</h2>
+              <div class="row g-4">
+                {% for related in related_posts %}
+                  <div class="col-12 col-md-4">
+                    <a class="domain-card h-100" href="{% url 'blog:post_detail' related.slug %}">
+                      <div class="domain-card__media">
+                        {% if related.featured_image %}
+                          <img
+                            class="domain-card__image"
+                            src="{{ related.featured_image.url }}"
+                            alt="{{ related.title }}"
+                            loading="lazy"
+                          />
+                        {% endif %}
+                      </div>
+                      <div class="domain-card__body">
+                        <h3 class="domain-card__title">{{ related.title }}</h3>
+                        <p class="domain-card__text mb-0">{{ related.excerpt|truncatewords:18 }}</p>
+                      </div>
+                    </a>
+                  </div>
+                {% endfor %}
+              </div>
+            </aside>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}

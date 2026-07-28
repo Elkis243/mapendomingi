@@ -208,6 +208,59 @@
     </div>
   </section>
 
+  {% if featured_posts %}
+  <section class="home-blog" id="actualites" aria-labelledby="home-blog-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <header class="domains__header text-center mx-auto mb-4 mb-md-5" data-aos="fade-up">
+            <p class="domains__eyebrow">Blog</p>
+            <h2 id="home-blog-heading" class="domains__title mb-0">
+              Nos derniers articles
+            </h2>
+          </header>
+
+          <div class="row g-4 justify-content-center">
+            {% for post in featured_posts %}
+              <div class="col-12 col-md-4" data-aos="fade-up">
+                <a class="domain-card h-100" href="{% url 'blog:post_detail' post.slug %}">
+                  <div class="domain-card__media">
+                    {% if post.featured_image %}
+                      <img
+                        class="domain-card__image"
+                        src="{{ post.featured_image.url }}"
+                        alt="{{ post.title }}"
+                        width="1200"
+                        height="900"
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    {% endif %}
+                    {% if post.category %}
+                      <span class="domain-card__badge">{{ post.category.name }}</span>
+                    {% endif %}
+                  </div>
+                  <div class="domain-card__body">
+                    <h3 class="domain-card__title">{{ post.title }}</h3>
+                    <p class="domain-card__text mb-0">{{ post.excerpt|truncatewords:22 }}</p>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="home-blog__footer text-center" data-aos="fade-up">
+            <a class="org__btn" href="{% url 'blog:post_list' %}">
+              Voir tous les articles
+              <i class="bi bi-arrow-right" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
 </main>
 
 {% include "partials/footer.html" %}

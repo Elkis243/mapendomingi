@@ -11,7 +11,7 @@
               <img
                 class="site-footer__logo"
                 src="{% static 'images/logo.png' %}"
-                alt="MAPENDO MINGI"
+                alt="Mapendo Mingi"
                 width="300"
                 height="147"
                 loading="lazy"
@@ -88,7 +88,7 @@
                 </a>
               </li>
               <li>
-                <a href="{% url 'app:blog' %}">
+                <a href="{% url 'blog:post_list' %}">
                   <i class="bi bi-chevron-right" aria-hidden="true"></i>
                   Blog
                 </a>
@@ -111,7 +111,7 @@
 
         <div class="site-footer__bottom">
           <p class="site-footer__copy">
-            © {% now "Y" %} MAPENDO MINGI ASBL. Tous droits réservés.
+            © {% now "Y" %} Mapendo Mingi ASBL. Tous droits réservés.
           </p>
         </div>
       </div>

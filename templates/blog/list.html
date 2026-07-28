@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog - Mapendo Mingi{% endblock title %}
+
+{% block body_class %}page-blog{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--blog" aria-labelledby="blog-hero-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image hero__image--blog"
+        src="{% static 'images/don.webp' %}"
+        alt=""
+        width="1200"
+        height="900"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="page-hero__content">
+            <h1 id="blog-hero-heading" class="page-hero__title">Découvrir autrement</h1>
+            <nav class="page-hero__breadcrumb" aria-label="Fil d’Ariane">
+              <a href="{% url 'app:home' %}">Home</a>
+              <span aria-hidden="true"> / </span>
+              <span class="page-hero__breadcrumb-current">Blog</span>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-list" aria-labelledby="blog-list-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-9">
+          <h2 id="blog-list-heading" class="visually-hidden">Articles</h2>
+
+          {% if posts %}
+            <div class="row g-4 justify-content-center">
+              {% for post in posts %}
+                <div class="col-12 col-md-6 col-lg-4" data-aos="fade-up">
+                  <a class="domain-card h-100" href="{% url 'blog:post_detail' post.slug %}">
+                    <div class="domain-card__media">
+                      {% if post.featured_image %}
+                        <img
+                          class="domain-card__image"
+                          src="{{ post.featured_image.url }}"
+                          alt="{{ post.title }}"
+                          width="1200"
+                          height="900"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      {% endif %}
+                      {% if post.category %}
+                        <span class="domain-card__badge">{{ post.category.name }}</span>
+                      {% endif %}
+                    </div>
+                    <div class="domain-card__body">
+                      <h3 class="domain-card__title">{{ post.title }}</h3>
+                      <p class="domain-card__text mb-0">{{ post.excerpt|truncatewords:28 }}</p>
+                    </div>
+                  </a>
+                </div>
+              {% endfor %}
+            </div>
+
+            {% if is_paginated %}
+              <nav class="blog-pagination" aria-label="Pagination du blog">
+                {% if page_obj.has_previous %}
+                  <a class="blog-pagination__link" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+                {% endif %}
+                <span class="blog-pagination__status">
+                  Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+                {% if page_obj.has_next %}
+                  <a class="blog-pagination__link" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+                {% endif %}
+              </nav>
+            {% endif %}
+          {% else %}
+            <p class="blog-empty__message mb-0" data-aos="fade-up">
+              Aucune publication pour l’instant — le blog ouvrira bientôt.
+            </p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% include "partials/footer.html" %}
+{% endblock base %}

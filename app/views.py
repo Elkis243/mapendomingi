@@ -1,8 +1,22 @@
 from django.shortcuts import render
 
+from blog.models import Post
+
 
 def home(request):
-    return render(request, 'home.html', {'page': 'MAPENDO MINGI'})
+    featured_posts = (
+        Post.objects.filter(status=Post.Status.PUBLISHED)
+        .select_related("category", "author")
+        .order_by("-is_featured", "-views", "-published_at", "-created_at")[:3]
+    )
+    return render(
+        request,
+        "home.html",
+        {
+            "page": "Mapendo Mingi",
+            "featured_posts": featured_posts,
+        },
+    )
 
 
 DOMAIN_PAGES = {
@@ -106,10 +120,6 @@ DOMAIN_PAGES = {
         ],
     },
 }
-
-
-def blog(request):
-    return render(request, 'blog.html', {'page': 'Blog'})
 
 
 def donate(request):

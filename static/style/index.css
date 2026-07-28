@@ -18,14 +18,23 @@
   font-family: var(--font-family-base);
 }
 
-html,
+html {
+  font-family: var(--font-family-base);
+  font-size: 13.5px;
+  letter-spacing: 0.3px;
+  color: var(--mm-ink);
+  background: var(--mm-white);
+}
+
 body {
   font-family: var(--font-family-base);
   font-size: 13.5px;
   letter-spacing: 0.3px;
   color: var(--mm-ink);
   background: var(--mm-white);
-  overflow-x: hidden;
+  overflow-x: clip;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
 }
 
 img {
@@ -130,25 +139,43 @@ img {
 }
 
 .site-navbar__offcanvas {
-  background: var(--mm-blue);
+  background: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--mm-blue) 45%, #000 55%) 58%,
+    transparent
+  );
   color: var(--mm-white);
+  backdrop-filter: blur(18px) saturate(1.15);
+  -webkit-backdrop-filter: blur(18px) saturate(1.15);
+  border-left: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: -12px 0 40px rgba(0, 0, 0, 0.35);
+}
+
+.site-navbar__offcanvas .offcanvas-header {
+  border-bottom: 0;
 }
 
 .site-navbar__offcanvas .btn-close {
   filter: invert(1);
+  opacity: 0.85;
 }
 
 .site-navbar__offcanvas .site-navbar__link {
-  color: var(--mm-white-muted);
+  color: rgba(255, 255, 255, 0.88);
+  padding: 0.55rem 0.75rem;
+  border-radius: 0.55rem;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .site-navbar__offcanvas .site-navbar__link:hover,
 .site-navbar__offcanvas .site-navbar__link:focus-visible {
   color: var(--mm-white);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .site-navbar__offcanvas .site-navbar__link.is-active {
-  color: var(--mm-blue-soft);
+  color: var(--mm-white);
+  background: rgba(61, 139, 184, 0.35);
 }
 
 @media (min-width: 1200px) {
@@ -521,6 +548,19 @@ img {
   .domain-card:hover {
     transform: none;
   }
+}
+
+/* ——— Accueil : articles ——— */
+
+.home-blog {
+  background: #f5f8fb;
+  color: var(--mm-ink);
+  padding-top: clamp(3.5rem, 8vw, 5.5rem);
+  padding-bottom: clamp(3.5rem, 8vw, 5.5rem);
+}
+
+.home-blog__footer {
+  margin-top: clamp(1.75rem, 4vw, 2.5rem);
 }
 
 /* ——— Engagement / Soutenir ——— */
@@ -942,7 +982,11 @@ img {
 
 @media (max-width: 767.98px) {
   .hero {
-    min-height: 50svh;
+    min-height: 55svh;
+  }
+
+  .page-home .hero__title {
+    font-size: clamp(1.7rem, 7vw, 2.35rem);
   }
 
   .hero--donate,
@@ -964,8 +1008,8 @@ img {
 
   .hero--donate,
   .hero--contact {
-    min-height: auto;
-    padding-bottom: 2rem;
+    min-height: 100svh;
+    padding-bottom: 0;
   }
 }
 
@@ -979,7 +1023,11 @@ img {
   }
 
   .hero {
-    min-height: 50svh;
+    min-height: 55svh;
+  }
+
+  .page-home .hero__title {
+    font-size: clamp(1.55rem, 6.5vw, 2.1rem);
   }
 
   .hero--blog {
@@ -993,8 +1041,8 @@ img {
 
   .hero--donate,
   .hero--contact {
-    min-height: auto;
-    padding-bottom: 1.5rem;
+    min-height: 100svh;
+    padding-bottom: 0;
   }
 
   .page-hero__title {
@@ -1049,6 +1097,11 @@ img {
 
 /* ——— Page Blog ——— */
 
+.blog-list {
+  background: #f5f8fb;
+  padding: clamp(3rem, 7vw, 5rem) 0;
+}
+
 .blog-empty {
   background: #f5f8fb;
   padding: clamp(3rem, 7vw, 5rem) 0;
@@ -1060,6 +1113,179 @@ img {
   font-size: 1.05rem;
   font-weight: 500;
   line-height: 1.6;
+}
+
+.blog-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.blog-pagination__link {
+  color: var(--mm-blue);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.blog-pagination__link:hover,
+.blog-pagination__link:focus-visible {
+  text-decoration: underline;
+}
+
+.blog-pagination__status {
+  color: rgba(3, 65, 105, 0.7);
+  font-size: 0.95rem;
+}
+
+.blog-detail__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1rem;
+}
+
+.blog-detail__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem 1.25rem;
+}
+
+.blog-detail__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.blog-detail__meta-item .bi {
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--mm-blue-mid);
+}
+
+.blog-detail__actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+  margin-left: auto;
+}
+
+.blog-detail__action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: 1.2;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.blog-detail__action:hover,
+.blog-detail__action:focus-visible,
+.blog-detail__action[aria-expanded="true"] {
+  background: transparent;
+  color: var(--mm-blue);
+}
+
+.blog-detail__action .bi {
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--mm-blue-mid);
+}
+
+.blog-detail__share-menu {
+  --bs-dropdown-min-width: 11rem;
+  border: 1px solid rgba(3, 65, 105, 0.12);
+  border-radius: 0;
+  box-shadow: 0 10px 28px rgba(3, 65, 105, 0.12);
+  padding: 0.35rem 0;
+}
+
+.blog-detail__share-menu .dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--mm-ink);
+  font-weight: 500;
+  padding: 0.55rem 1rem;
+}
+
+.blog-detail__share-menu .dropdown-item:hover,
+.blog-detail__share-menu .dropdown-item:focus {
+  background: rgba(3, 65, 105, 0.06);
+  color: var(--mm-blue);
+}
+
+.blog-detail__share-menu .bi {
+  color: var(--mm-blue-mid);
+}
+
+@media print {
+  .site-navbar,
+  .site-navbar__offcanvas,
+  .site-footer,
+  .blog-detail__actions,
+  .blog-related,
+  .hero {
+    display: none !important;
+  }
+
+  .domain-article {
+    padding-top: 0;
+  }
+}
+
+.blog-detail__content {
+  margin-top: 0.5rem;
+}
+
+.blog-detail__gallery {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 2rem;
+}
+
+.blog-detail__figure {
+  margin: 0;
+}
+
+.blog-detail__image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.blog-detail__figure figcaption {
+  margin-top: 0.5rem;
+  color: rgba(3, 65, 105, 0.7);
+  font-size: 0.9rem;
+}
+
+.blog-related {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(3, 65, 105, 0.12);
+}
+
+.blog-related__title {
+  margin: 0 0 1.25rem;
+  color: var(--mm-blue);
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 700;
 }
 
 /* ——— Pages Domaines ——— */
