@@ -71,9 +71,8 @@ STORAGES = {
         'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
     },
     'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedManifestStaticFilesStorage',
+        # CompressedStaticFilesStorage : plus fiable que Manifest si collectstatic
+        # vient d’être exécuté au démarrage du conteneur.
+        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
     },
 }
-
-# Évite un crash si un fichier référencé manque au collectstatic
-WHITENOISE_MANIFEST_STRICT = False
