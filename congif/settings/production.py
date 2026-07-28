@@ -9,8 +9,12 @@ from .base import *  # noqa: F401, F403
 SECRET_KEY = os.environ['SECRET_KEY']
 
 ALLOWED_HOSTS = [
-    'mapendomingi.org',
-    '.up.railway.app',
+    host.strip()
+    for host in os.getenv(
+        'ALLOWED_HOSTS',
+        'mapendomingi-production.up.railway.app,mapendomingi.org,www.mapendomingi.org',
+    ).split(',')
+    if host.strip()
 ]
 
 SECURE_HSTS_SECONDS = int(os.getenv('SECURE_HSTS_SECONDS', '31536000'))
@@ -24,9 +28,12 @@ SESSION_COOKIE_SECURE = os.getenv('SESSION_COOKIE_SECURE', 'True') == 'True'
 CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'True') == 'True'
 
 CSRF_TRUSTED_ORIGINS = [
-    'https://*.up.railway.app',
-    'https://mapendomingi.org',
-    'https://www.mapendomingi.org',
+    origin.strip()
+    for origin in os.getenv(
+        'CSRF_TRUSTED_ORIGINS',
+        'https://mapendomingi-production.up.railway.app,https://mapendomingi.org,https://www.mapendomingi.org',
+    ).split(',')
+    if origin.strip()
 ]
 
 X_FRAME_OPTIONS = os.getenv('X_FRAME_OPTIONS', 'DENY')
@@ -37,3 +44,25 @@ SECURE_CONTENT_TYPE_NOSNIFF = (
     os.getenv('SECURE_CONTENT_TYPE_NOSNIFF', 'True') == 'True'
 )
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Médias : Cloudinary (local = filesystem via MEDIA_ROOT)
+INSTALLED_APPS = [
+    *INSTALLED_APPS,  # noqa: F405
+    'cloudinary_storage',
+    'cloudinary',
+]
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ['CLOUDINARY_CLOUD_NAME'],
+    'API_KEY': os.environ['CLOUDINARY_API_KEY'],
+    'API_SECRET': os.environ['CLOUDINARY_API_SECRET'],
+}
+
+STORAGES = {
+    'default': {
+        'BACKEND': 'cloudinary_storage.storage.MediaCloudinaryStorage',
+    },
+    'staticfiles': {
+        'BACKEND': 'django.contrib.staticfiles.storage.StaticFilesStorage',
+    },
+}

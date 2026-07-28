@@ -1,3 +1,5 @@
 Django==6.0.7
 python-dotenv==1.2.2
 Pillow>=10.0.0
+cloudinary>=1.41.0
+dj3-cloudinary-storage>=0.0.6

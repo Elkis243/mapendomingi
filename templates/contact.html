@@ -39,7 +39,7 @@
                 Merci. Votre message a bien été reçu.
               </p>
             {% else %}
-              <form class="contact-form" method="post" action="{% url 'app:contact' %}" novalidate>
+              <form class="contact-form" id="contact-form" method="post" action="{% url 'app:contact' %}" novalidate>
                 {% csrf_token %}
                 <div class="contact-form__row">
                   <div class="contact-form__field">
@@ -51,7 +51,9 @@
                       name="name"
                       autocomplete="name"
                       required
+                      aria-describedby="contact-name-error"
                     />
+                    <p class="contact-form__error" id="contact-name-error" role="alert" hidden></p>
                   </div>
                   <div class="contact-form__field">
                     <label class="contact-form__label" for="contact-email">Email</label>
@@ -62,7 +64,9 @@
                       name="email"
                       autocomplete="email"
                       required
+                      aria-describedby="contact-email-error"
                     />
+                    <p class="contact-form__error" id="contact-email-error" role="alert" hidden></p>
                   </div>
                 </div>
 
@@ -74,7 +78,9 @@
                     id="contact-subject"
                     name="subject"
                     required
+                    aria-describedby="contact-subject-error"
                   />
+                  <p class="contact-form__error" id="contact-subject-error" role="alert" hidden></p>
                 </div>
 
                 <div class="contact-form__field">
@@ -85,7 +91,9 @@
                     name="message"
                     rows="4"
                     required
+                    aria-describedby="contact-message-error"
                   ></textarea>
+                  <p class="contact-form__error" id="contact-message-error" role="alert" hidden></p>
                 </div>
 
                 <button class="contact-form__submit" type="submit">Soumettre</button>
@@ -100,3 +108,96 @@
 
 {% include "partials/footer.html" %}
 {% endblock base %}
+
+{% block extra_js %}
+<script>
+  (function () {
+    const form = document.getElementById("contact-form");
+    if (!form) return;
+
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const fields = [
+      {
+        input: form.querySelector("#contact-name"),
+        error: form.querySelector("#contact-name-error"),
+        requiredMsg: "Le nom est obligatoire.",
+      },
+      {
+        input: form.querySelector("#contact-email"),
+        error: form.querySelector("#contact-email-error"),
+        requiredMsg: "L’email est obligatoire.",
+        invalidMsg: "Veuillez saisir une adresse email valide.",
+        validate: (value) => emailPattern.test(value),
+      },
+      {
+        input: form.querySelector("#contact-subject"),
+        error: form.querySelector("#contact-subject-error"),
+        requiredMsg: "Le sujet est obligatoire.",
+      },
+      {
+        input: form.querySelector("#contact-message"),
+        error: form.querySelector("#contact-message-error"),
+        requiredMsg: "Le message est obligatoire.",
+      },
+    ];
+
+    function clearError(field) {
+      field.input.classList.remove("is-invalid");
+      field.input.removeAttribute("aria-invalid");
+      field.error.hidden = true;
+      field.error.textContent = "";
+    }
+
+    function showError(field, message) {
+      field.input.classList.add("is-invalid");
+      field.input.setAttribute("aria-invalid", "true");
+      field.error.textContent = message;
+      field.error.hidden = false;
+    }
+
+    function validateField(field) {
+      const value = field.input.value.trim();
+
+      if (!value) {
+        showError(field, field.requiredMsg);
+        return false;
+      }
+
+      if (field.validate && !field.validate(value)) {
+        showError(field, field.invalidMsg);
+        return false;
+      }
+
+      clearError(field);
+      return true;
+    }
+
+    fields.forEach((field) => {
+      field.input.addEventListener("input", () => {
+        if (field.input.classList.contains("is-invalid")) {
+          validateField(field);
+        }
+      });
+      field.input.addEventListener("blur", () => validateField(field));
+    });
+
+    form.addEventListener("submit", (event) => {
+      let isValid = true;
+      let firstInvalid = null;
+
+      fields.forEach((field) => {
+        if (!validateField(field)) {
+          isValid = false;
+          if (!firstInvalid) firstInvalid = field.input;
+        }
+      });
+
+      if (!isValid) {
+        event.preventDefault();
+        firstInvalid.focus();
+      }
+    });
+  })();
+</script>
+{% endblock extra_js %}
