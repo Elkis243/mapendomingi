@@ -633,13 +633,21 @@ img {
 
 @media (max-width: 767.98px) {
   .impact-stats__list {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.65rem;
   }
 
-  .impact-stats__item + .impact-stats__item {
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.16);
+  .impact-stats__item {
+    padding: 0.15rem 0.25rem;
+  }
+
+  .impact-stats__value {
+    font-size: clamp(1.55rem, 7vw, 2rem);
+  }
+
+  .impact-stats__label {
+    font-size: 0.78rem;
+    line-height: 1.3;
   }
 }
 
