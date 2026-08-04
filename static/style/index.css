@@ -1826,6 +1826,22 @@ img {
   line-height: 1.5;
 }
 
+.site-footer__copy-sep {
+  margin: 0 0.35rem;
+}
+
+.site-footer__design-link {
+  color: var(--footer-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.site-footer__design-link:hover,
+.site-footer__design-link:focus-visible {
+  color: var(--mm-white);
+  text-decoration: underline;
+}
+
 @media (max-width: 991.98px) {
   .site-footer__grid {
     grid-template-columns: 1fr 1fr;
