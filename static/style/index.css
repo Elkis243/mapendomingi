@@ -1826,8 +1826,11 @@ img {
   line-height: 1.5;
 }
 
-.site-footer__copy-sep {
-  margin: 0 0.35rem;
+.site-footer__design {
+  margin: 0.35rem 0 0;
+  color: var(--footer-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
 }
 
 .site-footer__design-link {
