@@ -44,7 +44,7 @@ DOMAIN_PAGES = {
     'femme-enfant': {
         'page': 'Promotion de la Femme & Protection de l’Enfant',
         'hero_title': 'Promotion de la Femme & Protection de l’Enfant',
-        'hero_image': 'images/promotion-femme-enfant.webp',
+        'hero_image': 'images/promotion-femmes-enfants.webp',
         'hero_alt': 'Femmes et enfants accompagnés par MAPENDO MINGI',
         'article_title': 'Un engagement pour la dignité et la protection',
         'paragraphs': [
