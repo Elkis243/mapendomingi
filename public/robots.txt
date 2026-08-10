@@ -1,7 +1,69 @@
+# robots.txt — MAPENDO MINGI
+# https://www.robotstxt.org/robotstxt.html
+# Dernière mise à jour: 2026-08-10
+#
+# Important : robots.txt n'est PAS une sécurité HTTP.
+# Il demande aux robots de ne pas crawler certaines URLs.
+# /admin/ reste protégé par l'authentification Django.
+
+# ============================================
+# RÈGLES GÉNÉRALES
+# ============================================
 User-agent: *
+Disallow: /admin/
+Disallow: /admin/*
 Allow: /
 
+# ============================================
+# GOOGLE
+# ============================================
+User-agent: Googlebot
 Disallow: /admin/
-Disallow: /media/
+Disallow: /admin/*
+Allow: /
 
+User-agent: Googlebot-Image
+Disallow: /admin/
+Disallow: /admin/*
+Allow: /
+
+# ============================================
+# BING
+# ============================================
+User-agent: Bingbot
+Disallow: /admin/
+Disallow: /admin/*
+Allow: /
+
+# ============================================
+# BOTS SEO (crawl modéré)
+# ============================================
+User-agent: AhrefsBot
+Disallow: /admin/
+Allow: /
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Disallow: /admin/
+Allow: /
+Crawl-delay: 10
+
+User-agent: DotBot
+Disallow: /admin/
+Allow: /
+Crawl-delay: 5
+
+# ============================================
+# BOTS BLOQUÉS
+# ============================================
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+# ============================================
+# SITEMAP
+# ============================================
+Sitemap: https://www.mapendomingi.org/sitemap.xml
 Sitemap: https://mapendomingi.org/sitemap.xml
