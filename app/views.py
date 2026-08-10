@@ -1,10 +1,18 @@
+import logging
+import re
+
+from django.conf import settings
 from django.core.cache import cache
 from django.shortcuts import render
 
+from app.brevo import BrevoError, send_transactional_email
 from blog.models import Post
+
+logger = logging.getLogger(__name__)
 
 CONTACT_RATE_LIMIT = 3
 CONTACT_RATE_WINDOW_SECONDS = 10 * 60
+EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
 
 
 def _client_ip(request) -> str:
@@ -22,6 +30,45 @@ def _contact_rate_limited(request) -> bool:
         return True
     cache.set(cache_key, count + 1, CONTACT_RATE_WINDOW_SECONDS)
     return False
+
+
+def _valid_contact_payload(data: dict) -> tuple[bool, dict]:
+    name = (data.get("name") or "").strip()
+    email = (data.get("email") or "").strip()
+    subject = (data.get("subject") or "").strip()
+    message = (data.get("message") or "").strip()
+
+    if not name or not email or not subject or not message:
+        return False, {}
+    if not EMAIL_PATTERN.match(email):
+        return False, {}
+    if len(name) > 120 or len(email) > 254 or len(subject) > 200 or len(message) > 5000:
+        return False, {}
+
+    return True, {
+        "name": name,
+        "email": email,
+        "subject": subject,
+        "message": message,
+    }
+
+
+def _send_contact_message(payload: dict) -> None:
+    body = (
+        "Nouveau message via le formulaire de contact\n\n"
+        f"Nom : {payload['name']}\n"
+        f"Email : {payload['email']}\n"
+        f"Sujet : {payload['subject']}\n\n"
+        f"Message :\n{payload['message']}\n"
+    )
+    send_transactional_email(
+        to_email=settings.CONTACT_EMAIL_TO,
+        subject=f"[Contact] {payload['subject']}",
+        text_content=body,
+        reply_to_email=payload["email"],
+        reply_to_name=payload["name"],
+        sender_name=settings.CONTACT_SENDER_NAME,
+    )
 
 
 def home(request):
@@ -150,11 +197,21 @@ def donate(request):
 def contact(request):
     sent = False
     rate_limited = False
+    send_error = False
     if request.method == "POST":
         if _contact_rate_limited(request):
             rate_limited = True
         else:
-            sent = True
+            is_valid, payload = _valid_contact_payload(request.POST)
+            if is_valid:
+                try:
+                    _send_contact_message(payload)
+                    sent = True
+                except BrevoError:
+                    logger.exception("Échec d'envoi du formulaire de contact")
+                    send_error = True
+            else:
+                send_error = True
     return render(
         request,
         "contact.html",
@@ -162,6 +219,7 @@ def contact(request):
             "page": "Contact",
             "sent": sent,
             "rate_limited": rate_limited,
+            "send_error": send_error,
         },
     )
 

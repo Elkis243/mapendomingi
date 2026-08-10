@@ -42,14 +42,42 @@
             </div>
 
             {% if sent %}
-              <p class="contact-card__success" role="status">
-                Merci de votre intérêt. Votre demande est en cours de traitement.
-              </p>
+              <div class="contact-alert contact-alert--success" role="status">
+                <span class="contact-alert__icon" aria-hidden="true">
+                  <i class="bi bi-check-circle-fill"></i>
+                </span>
+                <div class="contact-alert__body">
+                  <p class="contact-alert__title">Message envoyé</p>
+                  <p class="contact-alert__text">
+                    Merci de votre intérêt. Votre demande est en cours de traitement.
+                  </p>
+                </div>
+              </div>
             {% else %}
               {% if rate_limited %}
-                <p class="contact-card__error" role="alert">
-                  Trop de tentatives. Réessayez dans quelques minutes.
-                </p>
+                <div class="contact-alert contact-alert--danger" role="alert">
+                  <span class="contact-alert__icon" aria-hidden="true">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                  </span>
+                  <div class="contact-alert__body">
+                    <p class="contact-alert__title">Trop de tentatives</p>
+                    <p class="contact-alert__text">
+                      Réessayez dans quelques minutes.
+                    </p>
+                  </div>
+                </div>
+              {% elif send_error %}
+                <div class="contact-alert contact-alert--danger" role="alert">
+                  <span class="contact-alert__icon" aria-hidden="true">
+                    <i class="bi bi-x-circle-fill"></i>
+                  </span>
+                  <div class="contact-alert__body">
+                    <p class="contact-alert__title">Envoi impossible</p>
+                    <p class="contact-alert__text">
+                      Impossible d’envoyer votre message pour le moment. Réessayez plus tard.
+                    </p>
+                  </div>
+                </div>
               {% endif %}
               <form class="contact-form" id="contact-form" method="post" action="{% url 'app:contact' %}" novalidate>
                 {% csrf_token %}
