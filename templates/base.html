@@ -64,7 +64,7 @@
     <meta property="og:url" content="{% block og_url %}{{ SEO_CANONICAL_URL }}{% endblock og_url %}" />
     <meta property="og:image" content="{% block og_image %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endblock og_image %}" />
     <meta property="og:image:secure_url" content="{% block og_image_secure %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endblock %}" />
-    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:type" content="{% block og_image_type %}image/webp{% endblock og_image_type %}" />
     <meta property="og:image:width" content="{% block og_image_width %}1200{% endblock %}" />
     <meta property="og:image:height" content="{% block og_image_height %}630{% endblock %}" />
     <meta property="og:image:alt" content="{% block og_image_alt %}MAPENDO MINGI ASBL - Développement social et communautaire{% endblock %}" />
@@ -102,8 +102,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    {# Preload LCP / identité #}
-    <link rel="preload" href="{% static 'images/logo.png' %}" as="image" type="image/png" />
+    {# Preload LCP — rempli par chaque page (image hero) #}
     {% block preload_lcp %}{% endblock preload_lcp %}
 
     {# Bootstrap 5.3.3 #}
@@ -149,7 +148,44 @@
           "image": "{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}",
           "description": "ASBL de développement social et communautaire dont la mission est d'améliorer les conditions de vie des populations, avec un accent particulier sur les femmes, les enfants et les jeunes. Elle agit dans les domaines de la protection des droits humains, de l'éducation, de la santé, de l'entrepreneuriat, de l'agriculture, de la bonne gouvernance et de la consolidation de la paix.",
           "slogan": "Améliorer les conditions de vie des populations",
-          "nonprofitStatus": "NonprofitType",
+          "email": "contact@mapendomingi.org",
+          "telephone": ["+243850294084", "+243824684332", "+33785811501"],
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Avenue IBIS, quartier Le Volcan",
+            "addressLocality": "Goma",
+            "addressRegion": "Nord-Kivu",
+            "addressCountry": "CD"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "email": "contact@mapendomingi.org",
+              "telephone": "+243850294084",
+              "areaServed": "CD",
+              "availableLanguage": ["French"]
+            },
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "telephone": "+243824684332",
+              "areaServed": "CD",
+              "availableLanguage": ["French"]
+            },
+            {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "telephone": "+33785811501",
+              "areaServed": "FR",
+              "availableLanguage": ["French"]
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/share/1U5zW1dDag/",
+            "https://www.instagram.com/mapendo_mingi/",
+            "https://www.tiktok.com/@mapendo_mingi"
+          ],
           "knowsLanguage": ["fr"],
           "knowsAbout": [
             "Développement social et communautaire",

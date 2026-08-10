@@ -6,13 +6,22 @@
 {% block meta_description %}{{ article_title }} — domaine d’intervention de MAPENDO MINGI en République Démocratique du Congo.{% endblock meta_description %}
 {% block og_title %}{{ hero_title }} - MAPENDO MINGI{% endblock og_title %}
 {% block og_description %}{{ paragraphs.0|truncatewords:40 }}{% endblock og_description %}
-{% block og_image %}{{ SEO_ORIGIN }}{% static hero_image %}{% endblock og_image %}
-{% block og_image_secure %}{{ SEO_ORIGIN }}{% static hero_image %}{% endblock %}
+{% block og_image %}{{ SEO_ORIGIN }}{% static og_image %}{% endblock og_image %}
+{% block og_image_secure %}{{ SEO_ORIGIN }}{% static og_image %}{% endblock %}
+{% block og_image_type %}image/webp{% endblock og_image_type %}
+{% block og_image_width %}1200{% endblock %}
+{% block og_image_height %}630{% endblock %}
+{% block og_image_alt %}{{ hero_title }} - MAPENDO MINGI{% endblock %}
 {% block twitter_title %}{{ hero_title }} - MAPENDO MINGI{% endblock twitter_title %}
 {% block twitter_description %}{{ paragraphs.0|truncatewords:30 }}{% endblock twitter_description %}
-{% block twitter_image %}{{ SEO_ORIGIN }}{% static hero_image %}{% endblock twitter_image %}
+{% block twitter_image %}{{ SEO_ORIGIN }}{% static og_image %}{% endblock twitter_image %}
+{% block twitter_image_alt %}{{ hero_title }} - MAPENDO MINGI{% endblock %}
 {% block webpage_name %}{{ hero_title }} - MAPENDO MINGI{% endblock webpage_name %}
-{% block webpage_image %}{{ SEO_ORIGIN }}{% static hero_image %}{% endblock webpage_image %}
+{% block webpage_image %}{{ SEO_ORIGIN }}{% static og_image %}{% endblock webpage_image %}
+
+{% block preload_lcp %}
+<link rel="preload" as="image" href="{% static hero_image %}" type="image/webp" fetchpriority="high" />
+{% endblock preload_lcp %}
 
 {% block body_class %}page-domain{% endblock body_class %}
 

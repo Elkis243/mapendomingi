@@ -92,6 +92,7 @@ DOMAIN_PAGES = {
         'page': 'Promotion de la Femme & Protection de l’Enfant',
         'hero_title': 'Promotion de la Femme & Protection de l’Enfant',
         'hero_image': 'images/promotion-femmes-enfants.webp',
+        'og_image': 'images/og/femme-enfant.webp',
         'hero_alt': 'Femmes et enfants accompagnés par MAPENDO MINGI',
         'article_title': 'Un engagement pour la dignité et la protection',
         'paragraphs': [
@@ -126,6 +127,7 @@ DOMAIN_PAGES = {
         'page': 'Éducation, Jeunesse & Entrepreneuriat',
         'hero_title': 'Éducation, Jeunesse & Entrepreneuriat',
         'hero_image': 'images/education-jeunesse-entrepreneur.webp',
+        'og_image': 'images/og/education-jeunesse.webp',
         'hero_alt': 'Jeunes en situation d’apprentissage et d’accompagnement',
         'article_title': 'Former et ouvrir des perspectives',
         'paragraphs': [
@@ -159,6 +161,7 @@ DOMAIN_PAGES = {
         'page': 'Santé & Développement Durable',
         'hero_title': 'Santé & Développement Durable',
         'hero_image': 'images/sante-developpement-durable.webp',
+        'og_image': 'images/og/sante-durable.webp',
         'hero_alt': 'Initiatives communautaires pour la santé et le développement durable',
         'article_title': 'Prendre soin aujourd’hui, construire demain',
         'paragraphs': [

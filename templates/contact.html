@@ -10,6 +10,10 @@
 {% block twitter_description %}Contactez MAPENDO MINGI pour collaborer ou poser une question.{% endblock twitter_description %}
 {% block webpage_name %}Contact - MAPENDO MINGI{% endblock webpage_name %}
 
+{% block preload_lcp %}
+<link rel="preload" as="image" href="{% static 'images/hero.webp' %}" type="image/webp" fetchpriority="high" />
+{% endblock preload_lcp %}
+
 {% block body_class %}page-contact{% endblock body_class %}
 
 {% block base %}

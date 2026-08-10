@@ -7,14 +7,27 @@
 {% block og_title %}{{ post.title }} - MAPENDO MINGI{% endblock og_title %}
 {% block og_description %}{{ post.excerpt|truncatewords:40 }}{% endblock og_description %}
 {% block og_type %}article{% endblock og_type %}
-{% block og_image %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock og_image %}
-{% block og_image_secure %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock %}
+{% block og_image %}{{ share_og.url }}{% endblock og_image %}
+{% block og_image_secure %}{{ share_og.url }}{% endblock %}
+{% block og_image_type %}{{ share_og.type }}{% endblock og_image_type %}
+{% block og_image_width %}{{ share_og.width }}{% endblock %}
+{% block og_image_height %}{{ share_og.height }}{% endblock %}
+{% block og_image_alt %}{{ post.title }} - MAPENDO MINGI{% endblock %}
 {% block twitter_title %}{{ post.title }} - MAPENDO MINGI{% endblock twitter_title %}
 {% block twitter_description %}{{ post.excerpt|truncatewords:30 }}{% endblock twitter_description %}
-{% block twitter_image %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock twitter_image %}
+{% block twitter_image %}{{ share_og.url }}{% endblock twitter_image %}
+{% block twitter_image_alt %}{{ post.title }} - MAPENDO MINGI{% endblock %}
 {% block webpage_name %}{{ post.title }} - MAPENDO MINGI{% endblock webpage_name %}
 {% block webpage_description %}{{ post.excerpt|truncatewords:40 }}{% endblock webpage_description %}
-{% block webpage_image %}{% if post.featured_image %}{% if post.featured_image.url|slice:":4" == "http" %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}{% else %}{{ SEO_ORIGIN }}{% static 'images/social_network_logo.webp' %}{% endif %}{% endblock webpage_image %}
+{% block webpage_image %}{{ share_og.url }}{% endblock webpage_image %}
+
+{% block preload_lcp %}
+{% if post.featured_image %}
+<link rel="preload" as="image" href="{{ post.featured_image.url }}" fetchpriority="high" />
+{% else %}
+<link rel="preload" as="image" href="{% static 'images/don.webp' %}" type="image/webp" fetchpriority="high" />
+{% endif %}
+{% endblock preload_lcp %}
 
 {% block structured_data_extra %}
 <script type="application/ld+json">
@@ -39,10 +52,12 @@
     "@id": "{{ SEO_ORIGIN }}/#organization"
   },
   "articleSection": "{{ post.category.name|escapejs }}",
-  {% if post.featured_image %}
+  {% if share_og.url %}
   "image": {
     "@type": "ImageObject",
-    "url": "{% if post.featured_image.url|slice:':4' == 'http' %}{{ post.featured_image.url }}{% else %}{{ SEO_ORIGIN }}{{ post.featured_image.url }}{% endif %}"
+    "url": "{{ share_og.url }}",
+    "width": {{ share_og.width }},
+    "height": {{ share_og.height }}
   },
   {% endif %}
   "url": "{{ SEO_CANONICAL_URL }}"

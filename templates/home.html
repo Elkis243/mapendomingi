@@ -12,6 +12,10 @@
 {% block webpage_name %}MAPENDO MINGI - Accueil{% endblock webpage_name %}
 {% block webpage_description %}Page d’accueil de MAPENDO MINGI, ASBL de développement social et communautaire en RDC.{% endblock webpage_description %}
 
+{% block preload_lcp %}
+<link rel="preload" as="image" href="{% static 'images/hero.webp' %}" type="image/webp" fetchpriority="high" />
+{% endblock preload_lcp %}
+
 {% block body_class %}page-home{% endblock body_class %}
 
 {% block base %}

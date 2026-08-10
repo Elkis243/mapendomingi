@@ -10,6 +10,10 @@
 {% block twitter_description %}Mission, vision et actions de MAPENDO MINGI en RDC.{% endblock twitter_description %}
 {% block webpage_name %}Qui sommes-nous - MAPENDO MINGI{% endblock webpage_name %}
 
+{% block preload_lcp %}
+<link rel="preload" as="image" href="{% static 'images/about.webp' %}" type="image/webp" fetchpriority="high" />
+{% endblock preload_lcp %}
+
 {% block body_class %}page-about{% endblock body_class %}
 
 {% block base %}

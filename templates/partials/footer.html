@@ -89,9 +89,21 @@
                 </a>
               </li>
               <li>
-                <a href="{% url 'app:home' %}#domaines">
+                <a href="{% url 'app:domain_detail' 'femme-enfant' %}">
                   <i class="bi bi-chevron-right" aria-hidden="true"></i>
-                  Domaines d’intervention
+                  Femme &amp; Enfant
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:domain_detail' 'education-jeunesse' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Éducation &amp; Jeunesse
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'app:domain_detail' 'sante-durable' %}">
+                  <i class="bi bi-chevron-right" aria-hidden="true"></i>
+                  Santé &amp; Développement durable
                 </a>
               </li>
               <li>

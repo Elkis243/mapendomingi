@@ -10,6 +10,10 @@
 {% block twitter_description %}Soutenez MAPENDO MINGI et aidez les communautés vulnérables en RDC.{% endblock twitter_description %}
 {% block webpage_name %}Faire un don - MAPENDO MINGI{% endblock webpage_name %}
 
+{% block preload_lcp %}
+<link rel="preload" as="image" href="{% static 'images/don.webp' %}" type="image/webp" fetchpriority="high" />
+{% endblock preload_lcp %}
+
 {% block body_class %}page-donate{% endblock body_class %}
 
 {% block base %}

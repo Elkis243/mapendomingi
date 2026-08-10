@@ -3,7 +3,10 @@ Vues du blog : liste et détail des articles publiés.
 """
 
 from django.db.models import F, Prefetch
+from django.templatetags.static import static
 from django.views.generic import DetailView, ListView
+
+from app.seo import blog_share_image
 
 from .models import Post, PostImage
 
@@ -94,6 +97,18 @@ class PostDetailView(DetailView):
             .exclude(pk=post.pk)
             .select_related("category", "author")
             .order_by("-published_at", "-created_at")[:3]
+        )
+
+        origin = context.get("SEO_ORIGIN", "").rstrip("/")
+        featured_url = None
+        if post.featured_image:
+            try:
+                featured_url = post.featured_image.url
+            except ValueError:
+                featured_url = None
+        context["share_og"] = blog_share_image(
+            featured_url=featured_url,
+            fallback_url=f"{origin}{static('images/social_network_logo.webp')}",
         )
 
         return context
