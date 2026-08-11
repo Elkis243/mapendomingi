@@ -35,6 +35,14 @@ urlpatterns = [
         {'document_root': settings.BASE_DIR / 'public', 'path': 'robots.txt'},
     ),
     path(
+        'favicon.ico',
+        serve,
+        {
+            'document_root': settings.BASE_DIR / 'public',
+            'path': 'favicon.ico',
+        },
+    ),
+    path(
         'sitemap.xml',
         sitemap,
         {'sitemaps': sitemaps},
