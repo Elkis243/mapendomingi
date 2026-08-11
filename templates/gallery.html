@@ -89,8 +89,24 @@
                   />
                 </button>
               </figure>
+            {% empty %}
+              <p class="gallery-page__empty mb-0">Aucune image pour le moment.</p>
             {% endfor %}
           </div>
+
+          {% if is_paginated %}
+            <nav class="blog-pagination" aria-label="Pagination de la galerie">
+              {% if page_obj.has_previous %}
+                <a class="blog-pagination__link" href="?page={{ page_obj.previous_page_number }}">Précédent</a>
+              {% endif %}
+              <span class="blog-pagination__status">
+                Page {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+              </span>
+              {% if page_obj.has_next %}
+                <a class="blog-pagination__link" href="?page={{ page_obj.next_page_number }}">Suivant</a>
+              {% endif %}
+            </nav>
+          {% endif %}
         </div>
       </div>
     </div>

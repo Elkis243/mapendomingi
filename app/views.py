@@ -1,9 +1,12 @@
 import logging
 import re
+from pathlib import Path
 
 from django.conf import settings
 from django.core.cache import cache
+from django.core.paginator import Paginator
 from django.shortcuts import render
+from PIL import Image
 
 from app.brevo import BrevoError, send_transactional_email
 from blog.models import Post
@@ -13,6 +16,21 @@ logger = logging.getLogger(__name__)
 CONTACT_RATE_LIMIT = 3
 CONTACT_RATE_WINDOW_SECONDS = 10 * 60
 EMAIL_PATTERN = re.compile(r"^[^\s@]+@[^\s@]+\.[^\s@]+$")
+GALLERY_PAGE_SIZE = 6
+GALLERY_ALT_BY_STEM = {
+    "picture1": "Actions de MAPENDO MINGI sur le terrain",
+    "picture2": "Communauté accompagnée par MAPENDO MINGI",
+    "picture3": "Moment de partage et de solidarité",
+    "picture4": "Engagement communautaire de MAPENDO MINGI",
+    "picture5": "Accompagnement des familles et des jeunes",
+    "picture6": "Activité éducative avec les enfants",
+    "picture7": "Sensibilisation au sein de la communauté",
+    "picture8": "Solidarité et entraide locale",
+    "picture9": "Actions de proximité sur le terrain",
+    "picture10": "Rencontre avec les bénéficiaires",
+    "picture11": "Initiative locale soutenue par MAPENDO MINGI",
+    "picture12": "Engagement pour un avenir meilleur",
+}
 
 
 def _client_ip(request) -> str:
@@ -231,41 +249,63 @@ def about(request):
     return render(request, 'about.html', {'page': 'Qui sommes-nous'})
 
 
-GALLERY_IMAGES = [
-    {
-        "src": "images/galeries/picture1.webp",
-        "alt": "Actions de MAPENDO MINGI sur le terrain",
-        "width": 700,
-        "height": 463,
-    },
-    {
-        "src": "images/galeries/picture2.webp",
-        "alt": "Communauté accompagnée par MAPENDO MINGI",
-        "width": 800,
-        "height": 600,
-    },
-    {
-        "src": "images/galeries/picture3.webp",
-        "alt": "Moment de partage et de solidarité",
-        "width": 800,
-        "height": 600,
-    },
-    {
-        "src": "images/galeries/picture4.webp",
-        "alt": "Engagement communautaire de MAPENDO MINGI",
-        "width": 700,
-        "height": 525,
-    },
-]
+def _gallery_dir():
+    source = Path(settings.BASE_DIR) / "static" / "images" / "galeries"
+    if source.is_dir():
+        return source
+    return Path(settings.STATIC_ROOT) / "images" / "galeries"
+
+
+def _natural_sort_key(path):
+    return [
+        int(part) if part.isdigit() else part.lower()
+        for part in re.split(r"(\d+)", path.stem)
+    ]
+
+
+def _load_gallery_images():
+    folder = _gallery_dir()
+    if not folder.is_dir():
+        return []
+
+    images = []
+    for path in sorted(folder.iterdir(), key=_natural_sort_key):
+        if path.suffix.lower() not in {".webp", ".jpg", ".jpeg", ".png", ".gif"}:
+            continue
+        width, height = 800, 600
+        try:
+            with Image.open(path) as im:
+                width, height = im.size
+        except OSError:
+            logger.warning("Impossible de lire l'image galerie %s", path.name)
+
+        images.append(
+            {
+                "src": f"images/galeries/{path.name}",
+                "alt": GALLERY_ALT_BY_STEM.get(
+                    path.stem,
+                    f"Image MAPENDO MINGI — {path.stem}",
+                ),
+                "width": width,
+                "height": height,
+            }
+        )
+    return images
 
 
 def gallery(request):
+    images = _load_gallery_images()
+    paginator = Paginator(images, GALLERY_PAGE_SIZE)
+    page_obj = paginator.get_page(request.GET.get("page"))
+
     return render(
         request,
         "gallery.html",
         {
             "page": "Galerie",
-            "gallery_images": GALLERY_IMAGES,
+            "gallery_images": page_obj.object_list,
+            "page_obj": page_obj,
+            "is_paginated": page_obj.paginator.num_pages > 1,
         },
     )
 
