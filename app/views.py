@@ -231,6 +231,45 @@ def about(request):
     return render(request, 'about.html', {'page': 'Qui sommes-nous'})
 
 
+GALLERY_IMAGES = [
+    {
+        "src": "images/galeries/picture1.webp",
+        "alt": "Actions de MAPENDO MINGI sur le terrain",
+        "width": 700,
+        "height": 463,
+    },
+    {
+        "src": "images/galeries/picture2.webp",
+        "alt": "Communauté accompagnée par MAPENDO MINGI",
+        "width": 800,
+        "height": 600,
+    },
+    {
+        "src": "images/galeries/picture3.webp",
+        "alt": "Moment de partage et de solidarité",
+        "width": 800,
+        "height": 600,
+    },
+    {
+        "src": "images/galeries/picture4.webp",
+        "alt": "Engagement communautaire de MAPENDO MINGI",
+        "width": 700,
+        "height": 525,
+    },
+]
+
+
+def gallery(request):
+    return render(
+        request,
+        "gallery.html",
+        {
+            "page": "Galerie",
+            "gallery_images": GALLERY_IMAGES,
+        },
+    )
+
+
 def domain_detail(request, slug):
     domain = DOMAIN_PAGES.get(slug)
     if not domain:

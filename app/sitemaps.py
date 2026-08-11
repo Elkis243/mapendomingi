@@ -32,6 +32,7 @@ class StaticViewSitemap(Sitemap):
             ("app:about", 0.8, "monthly"),
             ("app:donate", 0.9, "monthly"),
             ("app:contact", 0.7, "monthly"),
+            ("app:gallery", 0.6, "monthly"),
             ("blog:post_list", 0.7, "weekly"),
             ("app:domain_detail", 0.8, "monthly", {"slug": "femme-enfant"}),
             ("app:domain_detail", 0.8, "monthly", {"slug": "education-jeunesse"}),

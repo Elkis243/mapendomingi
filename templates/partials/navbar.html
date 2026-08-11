@@ -31,6 +31,7 @@
             <a class="site-navbar__link{% if request.resolver_match.url_name == 'about' %} is-active{% endif %}" href="{% url 'app:about' %}">Qui sommes-nous</a>
             <a class="site-navbar__link{% if request.resolver_match.url_name == 'domain_detail' %} is-active{% endif %}" href="{% url 'app:home' %}#domaines">Domaines d’intervention</a>
             <a class="site-navbar__link{% if request.resolver_match.namespace == 'blog' %} is-active{% endif %}" href="{% url 'blog:post_list' %}">Blog</a>
+            <a class="site-navbar__link{% if request.resolver_match.url_name == 'gallery' %} is-active{% endif %}" href="{% url 'app:gallery' %}">Galerie</a>
             <a class="site-navbar__link{% if request.resolver_match.url_name == 'contact' %} is-active{% endif %}" href="{% url 'app:contact' %}">Contact</a>
             <a class="site-navbar__link{% if request.resolver_match.url_name == 'donate' %} is-active{% endif %}" href="{% url 'app:donate' %}">Faire un don</a>
           </div>
@@ -64,6 +65,7 @@
     <a class="site-navbar__link{% if request.resolver_match.url_name == 'about' %} is-active{% endif %}" href="{% url 'app:about' %}">Qui sommes-nous</a>
     <a class="site-navbar__link{% if request.resolver_match.url_name == 'domain_detail' %} is-active{% endif %}" href="{% url 'app:home' %}#domaines">Domaines d’intervention</a>
     <a class="site-navbar__link{% if request.resolver_match.namespace == 'blog' %} is-active{% endif %}" href="{% url 'blog:post_list' %}">Blog</a>
+    <a class="site-navbar__link{% if request.resolver_match.url_name == 'gallery' %} is-active{% endif %}" href="{% url 'app:gallery' %}">Galerie</a>
     <a class="site-navbar__link{% if request.resolver_match.url_name == 'contact' %} is-active{% endif %}" href="{% url 'app:contact' %}">Contact</a>
     <a class="site-navbar__link{% if request.resolver_match.url_name == 'donate' %} is-active{% endif %}" href="{% url 'app:donate' %}">Faire un don</a>
   </div>

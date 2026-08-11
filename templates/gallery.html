@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Galerie - MAPENDO MINGI{% endblock title %}
+
+{% block meta_description %}Découvrez la galerie photo de MAPENDO MINGI : moments d’action, de solidarité et d’accompagnement des communautés en République Démocratique du Congo.{% endblock meta_description %}
+{% block og_title %}Galerie - MAPENDO MINGI{% endblock og_title %}
+{% block og_description %}Images de nos actions sur le terrain pour les femmes, les enfants et les jeunes en RDC.{% endblock og_description %}
+{% block twitter_title %}Galerie - MAPENDO MINGI{% endblock twitter_title %}
+{% block twitter_description %}Galerie photo des actions de MAPENDO MINGI en RDC.{% endblock twitter_description %}
+{% block webpage_name %}Galerie - MAPENDO MINGI{% endblock webpage_name %}
+{% block webpage_description %}Galerie photo des actions de MAPENDO MINGI sur le terrain.{% endblock webpage_description %}
+
+{% block preload_lcp %}
+<link rel="preload" as="image" href="{% static 'images/galeries/picture1.webp' %}" type="image/webp" fetchpriority="high" />
+{% endblock preload_lcp %}
+
+{% block body_class %}page-gallery{% endblock body_class %}
+
+{% block base %}
+{% include "partials/navbar.html" %}
+
+<main id="main-content">
+  <section class="hero hero--gallery" aria-labelledby="gallery-hero-heading">
+    <div class="hero__media" aria-hidden="true">
+      <img
+        class="hero__image hero__image--gallery"
+        src="{% static 'images/galeries/picture1.webp' %}"
+        alt=""
+        width="700"
+        height="463"
+        fetchpriority="high"
+      />
+      <div class="hero__veil"></div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="page-hero__content">
+            <h1 id="gallery-hero-heading" class="page-hero__title">Galerie</h1>
+            <nav class="page-hero__breadcrumb" aria-label="Fil d’Ariane">
+              <a href="{% url 'app:home' %}">Accueil</a>
+              <span aria-hidden="true"> / </span>
+              <span class="page-hero__breadcrumb-current">Galerie</span>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="gallery-page" aria-labelledby="gallery-content-heading">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-8">
+          <header class="domains__header text-center mx-auto mb-4 mb-md-5" data-aos="fade-up">
+            <p class="domains__eyebrow">Nos actions en images</p>
+            <h2 id="gallery-content-heading" class="domains__title">
+              Un aperçu de nos moments sur le terrain
+            </h2>
+          </header>
+
+          <div class="gallery-grid" role="list">
+            {% for image in gallery_images %}
+              <figure
+                class="gallery-grid__item"
+                role="listitem"
+                data-aos="fade-up"
+                data-aos-delay="{{ forloop.counter0 }}00"
+              >
+                <button
+                  class="gallery-grid__trigger"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#galleryModal"
+                  data-gallery-src="{% static image.src %}"
+                  data-gallery-alt="{{ image.alt }}"
+                  aria-label="Agrandir : {{ image.alt }}"
+                >
+                  <img
+                    class="gallery-grid__image"
+                    src="{% static image.src %}"
+                    alt="{{ image.alt }}"
+                    width="{{ image.width }}"
+                    height="{{ image.height }}"
+                    loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                    decoding="async"
+                  />
+                </button>
+              </figure>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div
+  class="modal fade gallery-modal"
+  id="galleryModal"
+  tabindex="-1"
+  aria-label="Aperçu de l’image"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl">
+    <div class="modal-content gallery-modal__content">
+      <button
+        type="button"
+        class="gallery-modal__close"
+        data-bs-dismiss="modal"
+        aria-label="Fermer"
+      >
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+      <div class="modal-body gallery-modal__body">
+        <img
+          class="gallery-modal__image"
+          id="galleryModalImage"
+          src=""
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+{% include "partials/footer.html" %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("galleryModal");
+    const modalImage = document.getElementById("galleryModalImage");
+    if (!modal || !modalImage) {
+      return;
+    }
+
+    modal.addEventListener("show.bs.modal", function (event) {
+      const trigger = event.relatedTarget;
+      if (!trigger) {
+        return;
+      }
+      modalImage.src = trigger.getAttribute("data-gallery-src") || "";
+      modalImage.alt = trigger.getAttribute("data-gallery-alt") || "";
+    });
+
+    modal.addEventListener("hidden.bs.modal", function () {
+      modalImage.removeAttribute("src");
+      modalImage.alt = "";
+    });
+  });
+</script>
+{% endblock base %}
