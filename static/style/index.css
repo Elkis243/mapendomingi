@@ -10,7 +10,7 @@
   --mm-ink: #034169;
   --font-family-base: "Outfit", sans-serif;
   --navbar-height: 2rem;
-  --navbar-logo-height: 72px;
+  --navbar-logo-height: 58px;
   --navbar-logo-width: auto;
   --page-gutter-x: 1.25rem;
 }
@@ -357,7 +357,7 @@ body.is-loading {
   max-width: 52ch;
   margin: 0 0 2rem;
   color: var(--mm-white-muted);
-  font-size: 13.5px;
+  font-size: 12.75px;
   font-weight: 400;
   line-height: 1.55;
   letter-spacing: 0.3px;
@@ -1226,13 +1226,17 @@ body.is-loading {
     min-height: 55svh;
   }
 
+  .page-home .hero {
+    min-height: 68svh;
+  }
+
   .page-home .hero__title {
     font-size: clamp(1.7rem, 7vw, 2.35rem);
   }
 
   .page-home .hero__lead {
-    font-size: 15px;
-    line-height: 1.6;
+    font-size: 13.5px;
+    line-height: 1.55;
   }
 
   .hero--donate,
@@ -1276,13 +1280,17 @@ body.is-loading {
     min-height: 55svh;
   }
 
+  .page-home .hero {
+    min-height: 72svh;
+  }
+
   .page-home .hero__title {
     font-size: clamp(1.55rem, 6.5vw, 2.1rem);
   }
 
   .page-home .hero__lead {
-    font-size: 15.5px;
-    line-height: 1.62;
+    font-size: 13.25px;
+    line-height: 1.55;
   }
 
   .hero--blog {
