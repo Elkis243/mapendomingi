@@ -251,18 +251,14 @@
 
   <body class="{% block body_class %}{% endblock body_class %} is-loading">
     <div class="page-loader" id="page-loader" role="status" aria-live="polite" aria-label="Chargement">
-      <div class="page-loader__inner">
-        <img
-          class="page-loader__logo"
-          src="{% static 'images/logo.png' %}"
-          alt=""
-          width="300"
-          height="147"
-          decoding="async"
-        />
-        <span class="page-loader__spinner" aria-hidden="true"></span>
-        <span class="visually-hidden">Chargement…</span>
+      <div class="page-loader__inner" aria-hidden="true">
+        <div class="page-loader__rings">
+          <span class="page-loader__ring page-loader__ring--1"></span>
+          <span class="page-loader__ring page-loader__ring--2"></span>
+          <span class="page-loader__ring page-loader__ring--3"></span>
+        </div>
       </div>
+      <span class="visually-hidden">Chargement…</span>
     </div>
 
     <a class="visually-hidden-focusable position-absolute top-0 start-0 z-3 m-2 p-2 bg-white text-dark rounded" href="#main-content">
